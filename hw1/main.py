@@ -90,6 +90,14 @@ class Table:
 
 
     def search(self):
+        open_list = []
+        closed_list = []
+        open_list.append(Person(1,1))
+
+        while len(open_list)>=0:
+
+        print len(open_list)
+
         return self.score
 
 
