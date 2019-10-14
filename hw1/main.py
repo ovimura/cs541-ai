@@ -73,12 +73,24 @@ class Table:
         return preference_matrix[p1.no-1][p2.no-1]
 
     def get_score(self):
-        self.row1[1] = Person(6,0)
         for i in range(n/2-1):
             if self.r(self.row1[i]) == 0 and self.r(self.row1[i+1]) == 1:
                 self.score += 1
+            if self.r(self.row2[i]) == 0 and self.r(self.row2[i+1]) == 1:
+                self.score += 1
+            if self.r(self.row1[i]) == 0 and self.r(self.row2[i]) == 1:
+                self.score += 2
+            if self.r(self.row1[i]) == 1 and self.r(self.row2[i]) == 0:
+                self.score += 2
+        if self.r(self.row1[i+1]) == 0 and self.r(self.row2[i+1]) == 1:
+            self.score += 2
+        if self.r(self.row1[i+1]) == 1 and self.r(self.row2[i+1]) == 0:
+            self.score += 2
         return self.score
 
+
+    def search(self):
+        return self.score
 
 
 def main():
@@ -102,7 +114,8 @@ def main():
     print p.no
     print "hosts:" + str(t.r(Person(2,1)))
     print t.h(Person(1,1), Person(10,2))
-    print t.get_score()
+    print "get_score: " + str(t.get_score())
+    print "a* search: " + str(t.search())
 #    print r2
 #    read("data/hw1-inst2.txt")
 #    read("data/hw1-inst3.txt")
