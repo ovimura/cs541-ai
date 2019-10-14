@@ -33,16 +33,31 @@ def print_content(a):
         print "%s" % a[i][:-1]
         i += 1
 
-def process_row(data, k):
+def process_rows(data):
     global n
     global r1
     global r2
     global guests
-    for i in range(1, n/2+1):
-        r1.append((i,data[k].split(' ')[i-1]))
-    for j in range(1, n/2+1):
-        r2.append((guests[j-1],data[k].replace('\n', ' ').split(' ')[n/2+j-1]))
+    r1 = []
+    for k in range(n):
+        row = data[k].split(' ')
+        row[-1] = row[-1].replace('\n', '')
+        r1.append(row)
+#        for j in range(1, n/2+1):
+#            r2[k].append((guests[j-1],data[k].replace('\n', ' ').split(' ')[n/2+j-1]))
 
+
+class Person:
+    def __init__(self):
+        self.no = 0
+        self.seat = 0
+
+    def r(p):
+        global hosts
+        if p.no in hosts:
+            return 0
+        else:
+            return 1
 
 def main():
     global hosts
@@ -50,16 +65,19 @@ def main():
     global n
     global r1
     global r2
-    d = read("data/hw1-inst2.txt")
+    d = read("data/hw1-inst1.txt")
     print_content(d)
     get_n(d)
     get_hosts(d)
     print hosts
     get_guests(d)
     print guests
-    process_row(d, 1)
-    print r1
-    print r2
+    process_rows(d)
+    for a in range(len(r1)):
+        print r1[a]
+
+
+#    print r2
     read("data/hw1-inst2.txt")
     read("data/hw1-inst3.txt")
 
