@@ -53,9 +53,11 @@ class Person:
 
 
 class Table:
-    def __init__(self):
-        self.row1 = []
-        self.row2 = []
+    def __init__(self, n):
+        self.n = n
+        self.row1 = [Person(x,0) for x in range(1, n/2+1)]
+        self.row2 = [Person(x,0) for x in range(n/2+1, n+1)]
+        self.score = 0
 
     def r(self, p):
         global hosts
@@ -69,6 +71,14 @@ class Table:
         if p1.no == 0 or p2.no == 0:
             raise Exception("error: incorrect person number")
         return preference_matrix[p1.no-1][p2.no-1]
+
+    def get_score(self):
+        self.row1[1] = Person(6,0)
+        for i in range(n/2-1):
+            if self.r(self.row1[i]) == 0 and self.r(self.row1[i+1]) == 1:
+                self.score += 1
+        return self.score
+
 
 
 def main():
@@ -87,11 +97,12 @@ def main():
     for a in range(len(preference_matrix)):
         print preference_matrix[a]
 
-    t = Table()
+    t = Table(n)
     p = Person(2,4)
     print p.no
-    print t.r(Person(1,1))
-    print t.h(Person(1,1), Person(1,2))
+    print "hosts:" + str(t.r(Person(2,1)))
+    print t.h(Person(1,1), Person(10,2))
+    print t.get_score()
 #    print r2
 #    read("data/hw1-inst2.txt")
 #    read("data/hw1-inst3.txt")
