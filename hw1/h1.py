@@ -17,11 +17,11 @@ def get_n(data):
 
 def get_hosts(data):
     global hosts
-    hosts.extend( [x for x in range(1,n/2+1)])
+    hosts.extend( [x for x in range(1,int(n/2)+1)])
 
 def get_guests(data):
     global guests
-    guests = [x for x in range((n/2)+1, n+1)]
+    guests = [x for x in range(int(n/2)+1, n+1)]
 
 def read(p):
     with open(p, "r") as f:
@@ -32,7 +32,7 @@ def read(p):
 def print_content(a):
     i = 0
     while i<len(a):
-        print "%s" % a[i][:-1]
+        print ("%s" % a[i][:-1])
         i += 1
 
 def process_preference_matrix(data):
@@ -50,13 +50,13 @@ class Person:
     def __init__(self, no, seat):
         self.no = no
         self.seat = seat
-
+        self.c = 0
 
 class Table:
     def __init__(self, n):
         self.n = n
-        self.row1 = [Person(x,0) for x in range(1, n/2+1)]
-        self.row2 = [Person(x,0) for x in range(n/2+1, n+1)]
+        self.row1 = [Person(x,0) for x in range(1, int(n/2)+1)]
+        self.row2 = [Person(x,0) for x in range(int(n/2)+1, n+1)]
         self.score = 0
 
     def r(self, p):
@@ -94,58 +94,87 @@ class Table:
         global guests
         open_list = []
         closed_list = []
-        open_list.append(self.row1[0])
         hs = []
         gs = []
-        mx = 0
-        j = 0
+        mx = -1000
+        hpos = 0
+        gpos = 0
         seat_no = 1
-        pos = 0
+        r = 0
+        for x in self.row1:
+            hs.append(x)
+        for y in self.row2:
+            gs.append(y)
+        open_list.append(hs[0])
+        hs.pop(0)
         while len(open_list)>0:
             c = open_list[0]
-            c.seat = seat_no
             open_list.pop(0)
+            print (c.no)
             if self.r(c) == 0 and len(open_list) == 0:
-                for x in self.row2:
-                    gs.append(x)
                 for i in range(len(gs)):
-                    print "i: " + str(i)
                     m = self.h(c,gs[i])
-                    if m > mx:
+                    if int(m) > int(mx):
                         mx = m
                         j = i
                 tmp = gs[j]
                 tmp.seat = seat_no+len(self.row1)
-                self.row2.pop(j-len(self.row1))
-                self.row2.insert(pos,tmp)
+                for k,itm in enumerate(self.row2):
+                    if itm.no == tmp.no:
+                        self.row2.pop(k)
+                if r == 0:
+                    self.row2.insert(gpos,tmp)
+                else:
+                    self.row1.insert(gpos,tmp)
                 gs.pop(j)
-                pos += 1
                 open_list.append(tmp)
-            if self.r(c) == 1 and len(open_list) == 0:
-                for x in self.row1:
-                    if x.no != 1:
-                        hs.append(x)
-                mx = 0
-                j = 0
+                hpos += 1
+                mx = -1000
+                if len(hs) ==0 and len(gs) ==0:
+                    break
+                print ("gs size: " + str(len(gs)) + str(len(hs)))
+            elif self.r(c) == 1 and len(open_list) == 0:
+                print ("guest" + str(c.no))
+#                if c.no == 6:
+#                    break
                 for i in range(len(hs)):
-                    print "ii: " + str(i)
                     m = self.h(c,hs[i])
-                    if m > mx:
+                    print ("m: " + str(m) + " mx: " + str(mx))
+                    print (int(m)>int(mx))
+                    print (m)
+                    print (mx)
+                    if int(m) > int(mx):
                         mx = m
                         j = i
+                        print ("MX: " + str(mx))
                 tmp = hs[j]
-                tmp.seat = seat_no + 5
-                self.row2.insert(pos,tmp)
-                pos += 1
+                print (j)
+                print (hs[j].no)
+                print ([x.no for x in hs])
+                tmp.seat = seat_no + len(self.row1)
+                for k, itm in enumerate(self.row2):
+                    if itm.no == tmp.no:
+                        self.row2.pop(k)
+                for k, itm in enumerate(self.row1):
+                    if itm.no == tmp.no:
+                        self.row1.pop(k)
+                gpos += 1
+                if r == 0:
+                    r += 1
+                    self.row2.insert(hpos, tmp)
+                else:
+                    self.row1.insert(hpos, tmp)
+                    r -= 1
+                hs.pop(j)
+                mx = -1000
+                if len(hs)==0 and len(gs)==0:
+                    break
+                print ("hs size: " + str(len(hs)) + str(len(hs)))
                 open_list.append(tmp)
             closed_list.append(c)
-            closed_list.append(tmp)
             seat_no += 1
-
-        for y in self.row2:
-            print "y:: " + str(y.no)
-
-
+        print ([x.no for x in hs])
+        print ([x.no for x in gs])
         return self.score
 
 
@@ -154,24 +183,22 @@ def main():
     global guests
     global n
     global preference_matrix
-    d = read("data/hw1-inst1.txt")
+    d = read("data/hw1-inst3.txt")
     print_content(d)
     get_n(d)
     get_hosts(d)
-    print hosts
+    print (hosts)
     get_guests(d)
-    print guests
+    print (guests)
     process_preference_matrix(d)
     for a in range(len(preference_matrix)):
-        print preference_matrix[a]
+        print (preference_matrix[a])
 
     t = Table(n)
-    p = Person(2,4)
-    print p.no
-    print "hosts:" + str(t.r(Person(2,1)))
-    print t.h(Person(1,1), Person(10,2))
-    print "get_score: " + str(t.get_score())
-    print "a* search: " + str(t.search())
+    t.search()
+    print ([n.no for n in t.row1])
+    print ([m.no for m in t.row2])
+
 #    print r2
 #    read("data/hw1-inst2.txt")
 #    read("data/hw1-inst3.txt")
