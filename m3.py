@@ -9,6 +9,29 @@ class Graph:
     def get_neighbors(self, v):
         return self.adjacency_list[v]
 
+    def update_adjacency_list(self, v):
+        keys = [x for x in self.adjacency_list.keys() if x != v and x[1:] != v[1:] and x[:1] != v[:1]]
+        keys.insert(0,v)
+        excl = [x for x in self.adjacency_list.keys() if x not in keys]
+        print(excl)
+        for k in excl:
+            del self.adjacency_list[k]
+        for k in excl:
+            for key in self.adjacency_list.keys():
+                print([x[0] for x in self.adjacency_list[key]])
+                if k in [x[0] for x in self.adjacency_list[key]]:
+                    print(len(self.adjacency_list[key]))
+
+                    for idx, kk in enumerate(self.adjacency_list[key]):
+                        if k == kk[0]:
+                            self.adjacency_list[key].remove(kk)
+                    print(len(self.adjacency_list[key]))
+
+                print([x[0] for x in self.adjacency_list[key]])
+        print(len(self.adjacency_list))
+        exit(2)
+
+
     # heuristic function with equal values for all nodes
     def h(self, n):
         H = {}
@@ -25,7 +48,7 @@ class Graph:
             H['J'+str(x)] = 1
         return H[n]
 
-    def a_star_algorithm(self, start_node, stop_node):
+    def astar(self, start_node, stop_node):
         # open_list is a list of nodes which have been visited, but who's neighbors
         # haven't all been inspected, starts off with the start node
         # closed_list is a list of nodes which have been visited
@@ -56,6 +79,7 @@ class Graph:
             print (n)
             if n == stop_node:
                 reconst_path = []
+                s = []
                 while parents[n] != n:
                     reconst_path.append(n)
                     n = parents[n]
@@ -80,12 +104,12 @@ class Graph:
                     if g[m] > g[n] + weight:
                         g[m] = g[n] + weight
                         parents[m] = n
-
                         if m in closed_list:
                             closed_list.remove(m)
                             open_list.add(m)
             # remove n from the open_list, and add it to closed_list
             # because all of his neighbors were inspected
+            print(parents)
             open_list.remove(n)
             closed_list.add(n)
         print('Path does not exist!')
@@ -290,10 +314,19 @@ for y in range(1,11):
     adjacency_list['J'+str(y)] = adj_list10
 
 
+nn = 10
+
 graph1 = Graph(adjacency_list)
-p = graph1.a_star_algorithm(sys.argv[1], sys.argv[2])
+graph1.update_adjacency_list(sys.argv[1])
+graph1.update_adjacency_list(sys.argv[2])
 
+p = graph1.astar(sys.argv[1], sys.argv[2])
 
+excluded = []
 
+if len(p) < nn:
+    for k in ['A','B','C','D','E','F','G','H','I','J']:
+        if k not in [x[:1] for x in p]:
+            excluded.append(k)
 
-
+print("Excluded letter states:" + str(excluded))
