@@ -19,7 +19,7 @@ class Graph:
         H = {}
         for x in range(1,11):
             H['A'+str(x)] = 1
-            H['B'+str(x)] = 1
+            H['B'+str(x)] = 10
             H['C'+str(x)] = 1
             H['D'+str(x)] = 1
             H['E'+str(x)] = 1
@@ -56,7 +56,7 @@ class Graph:
                 if n == None or g[v] + self.h(v) > g[n] + self.h(n):
                     n = v;
                     gprev += g[n]
-            print ("n::: " + str(n))
+                print ("n::: " + str(n))
             if n == None:
                 print('Path does not exist!')
                 return None
@@ -81,9 +81,9 @@ class Graph:
             for (m, weight) in self.get_neighbors(n):
                 # if the current node isn't in both open_list and closed_list
                 # add it to open_list and note n as it's parent
-                print ("m: " + str(m))
-                print ("wei: " + str(weight))
-                print ("n: " + str(n))
+                #print ("m: " + str(m))
+                #print ("wei: " + str(weight))
+                #print ("n: " + str(n))
                 if m not in open_list and m not in closed_list:
                     open_list.add(m)
                     parents[m] = n
@@ -93,11 +93,11 @@ class Graph:
                 # and if it is, update parent data and g data
                 # and if the node was in the closed_list, move it to open_list
                 else:
-                    print ("g[m]: " + str(g[m]) + str(m))
-                    print ("g[n]: " + str(g[n]) + str(n))
-                    print ("m weight: " + str(weight))
+                    #print ("g[m]: " + str(g[m]) + str(m))
+                    #print ("g[n]: " + str(g[n]) + str(n))
+                    #print ("m weight: " + str(weight))
                     if g[m] > g[n] + weight:
-                        print ("--")
+                        #print ("--")
                         g[m] = g[n] + weight
                         parents[m] = n
 
@@ -127,46 +127,118 @@ adjacency_list = {}
 #    'I': [('H', 0), ('J', 0), ('D', 2)],
 #    'J': [('I', 0), ('E', 2)]
 #}
+
 for y in range(1,11):
-    adj_list = []
-    for x in range(1,6):
-        adj_list.append(('F'+str(x),0))
-        adj_list.append(('B'+str(x),0))
-    for z in range(6,11):
-        adj_list.append(('F'+str(z),2))
-        adj_list.append(('B'+str(z),1))
-    adjacency_list['A'+str(y)] = adj_list
-    adj_list.clear()
+    adj_list1 = []
+    adj_list2 = []
+    adj_list3 = []
+    adj_list4 = []
+    adj_list5 = []
+    adj_list6 = []
+    adj_list7 = []
+    adj_list8 = []
+    adj_list9 = []
+    adj_list10 = []
 
     for x in range(1,6):
-        adj_list.append(('A'+str(x),0))
-        adj_list.append(('C'+str(x),0))
-        adj_list.append(('G'+str(x),0))
+        adj_list1.append(('F'+str(x),0))
+        adj_list1.append(('B'+str(x),0))
     for z in range(6,11):
-        adj_list.append(('A'+str(z),1))
-        adj_list.append(('C'+str(z),1))
-        adj_list.append(('G'+str(z),2))
-    adjacency_list['B'+str(y)] = adj_list
-    adj_list.clear()
+        adj_list1.append(('F'+str(z),2))
+        adj_list1.append(('B'+str(z),1))
+    adjacency_list['A'+str(y)] = adj_list1
 
     for x in range(1,6):
-        adj_list.append(('B'+str(x),0))
-        adj_list.append(('H'+str(x),0))
-        adj_list.append(('D'+str(x),0))
+        adj_list2.append(('A'+str(x),0))
+        adj_list2.append(('C'+str(x),0))
+        adj_list2.append(('G'+str(x),0))
     for z in range(6,11):
-        adj_list.append(('B'+str(z),1))
-        adj_list.append(('H'+str(z),1))
-        adj_list.append(('D'+str(z),2))
-    adjacency_list['C'+str(y)] = adj_list
+        adj_list2.append(('A'+str(z),1))
+        adj_list2.append(('C'+str(z),1))
+        adj_list2.append(('G'+str(z),2))
+    adjacency_list['B'+str(y)] = adj_list2
+
+    for x in range(1,6):
+        adj_list3.append(('B'+str(x),0))
+        adj_list3.append(('H'+str(x),0))
+        adj_list3.append(('D'+str(x),0))
+    for z in range(6,11):
+        adj_list3.append(('B'+str(z),1))
+        adj_list3.append(('H'+str(z),2))
+        adj_list3.append(('D'+str(z),1))
+    adjacency_list['C'+str(y)] = adj_list3
+
+    for x in range(1,6):
+        adj_list4.append(('C'+str(x),0))
+        adj_list4.append(('E'+str(x),0))
+        adj_list4.append(('I'+str(x),0))
+    for z in range(6,11):
+        adj_list4.append(('C'+str(z),1))
+        adj_list4.append(('E'+str(z),1))
+        adj_list4.append(('I'+str(z),2))
+    adjacency_list['D'+str(y)] = adj_list4
+
+    for x in range(1,6):
+        adj_list5.append(('D'+str(x),0))
+        adj_list5.append(('J'+str(x),0))
+    for z in range(6,11):
+        adj_list5.append(('D'+str(z),1))
+        adj_list5.append(('J'+str(z),2))
+    adjacency_list['E'+str(y)] = adj_list5
+
+    for x in range(1,6):
+        adj_list6.append(('A'+str(x),0))
+        adj_list6.append(('G'+str(x),0))
+    for z in range(6,11):
+        adj_list6.append(('A'+str(z),2))
+        adj_list6.append(('G'+str(z),1))
+    adjacency_list['F'+str(y)] = adj_list6
+
+    for x in range(1,6):
+        adj_list7.append(('B'+str(x),0))
+        adj_list7.append(('F'+str(x),0))
+        adj_list7.append(('H'+str(x),0))
+    for z in range(6,11):
+        adj_list7.append(('B'+str(z),2))
+        adj_list7.append(('F'+str(z),1))
+        adj_list7.append(('H'+str(z),1))
+    adjacency_list['G'+str(y)] = adj_list7
 
 
+    for x in range(1,6):
+        adj_list8.append(('G'+str(x),0))
+        adj_list8.append(('I'+str(x),0))
+        adj_list8.append(('C'+str(x),0))
+    for z in range(6,11):
+        adj_list8.append(('G'+str(z),1))
+        adj_list8.append(('I'+str(z),1))
+        adj_list8.append(('C'+str(z),2))
+    adjacency_list['H'+str(y)] = adj_list8
 
-# print(adjacency_list)
+    for x in range(1,6):
+        adj_list9.append(('H'+str(x),0))
+        adj_list9.append(('J'+str(x),0))
+        adj_list9.append(('D'+str(x),0))
+    for z in range(6,11):
+        adj_list9.append(('H'+str(z),1))
+        adj_list9.append(('J'+str(z),1))
+        adj_list9.append(('D'+str(z),2))
+    adjacency_list['I'+str(y)] = adj_list9
 
-# exit(2)
+    for x in range(1,6):
+        adj_list10.append(('I'+str(x),0))
+        adj_list10.append(('E'+str(x),0))
+    for z in range(6,11):
+        adj_list10.append(('I'+str(z),1))
+        adj_list10.append(('E'+str(z),2))
+    adjacency_list['J'+str(y)] = adj_list10
+
+
+#print(adjacency_list)
+#exit(2)
 
 graph1 = Graph(adjacency_list)
-graph1.a_star_algorithm('A1', 'J')
+graph1.a_star_algorithm('A1', 'J1')
 
 
 
