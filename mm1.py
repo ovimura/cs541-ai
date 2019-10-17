@@ -16,19 +16,18 @@ class Graph:
 
     # heuristic function with equal values for all nodes
     def h(self, n):
-        H = {
-            'A': 1,
-            'B': 1,
-            'C': 1,
-            'D': 1,
-            'E': 1,
-            'F': 1,
-            'G': 1,
-            'H': 1,
-            'I': 1,
-            'J': 1
-        }
-
+        H = {}
+        for x in range(1,11):
+            H['A'+str(x)] = 1
+            H['B'+str(x)] = 1
+            H['C'+str(x)] = 1
+            H['D'+str(x)] = 1
+            H['E'+str(x)] = 1
+            H['F'+str(x)] = 1
+            H['G'+str(x)] = 1
+            H['H'+str(x)] = 1
+            H['I'+str(x)] = 1
+            H['J'+str(x)] = 1
         return H[n]
 
     def a_star_algorithm(self, start_node, stop_node):
@@ -116,20 +115,58 @@ class Graph:
 
 
 
-adjacency_list = {
-    'A': [('F', 2), ('B', 0)],
-    'B': [('A', 0), ('C', 0), ('G', 2)],
-    'C': [('B', 0), ('D', 0), ('H', 2)],
-    'D': [('C', 0), ('E', 0), ('I', 2)],
-    'E': [('D', 0), ('J', 2)],
-    'F': [('A', 2), ('G', 0)],
-    'G': [('B', 2), ('F', 0), ('H', 0)],
-    'H': [('G', 0), ('I', 0), ('C', 2)],
-    'I': [('H', 0), ('J', 0), ('D', 2)],
-    'J': [('I', 0), ('E', 2)]
-}
+adjacency_list = {}
+#    'A1': [('F2', 0), ('F3', 0), ('F4', 0), ('F5', 0), ('F6', 2), ('F7', 2), ('F8', 2), ('F9',2), ('F10',2), ('B2',0),('B3',0),('B4',0),('B5',0),('B6',1),('B7',1),('B8',1),('B9',1),('B10',1)],
+#    'B1': [('A1', 0), ('C', 0), ('G', 2)],
+#    'C': [('B1', 0), ('D', 0), ('H', 2)],
+#    'D': [('C', 0), ('E', 0), ('I', 2)],
+#    'E': [('D', 0), ('J', 2)],
+#    'F1': [('A1', 2), ('G', 0)],
+#    'G': [('B1', 2), ('F1', 0), ('H', 0)],
+#    'H': [('G', 0), ('I', 0), ('C', 2)],
+#    'I': [('H', 0), ('J', 0), ('D', 2)],
+#    'J': [('I', 0), ('E', 2)]
+#}
+for y in range(1,11):
+    adj_list = []
+    for x in range(1,6):
+        adj_list.append(('F'+str(x),0))
+        adj_list.append(('B'+str(x),0))
+    for z in range(6,11):
+        adj_list.append(('F'+str(z),2))
+        adj_list.append(('B'+str(z),1))
+    adjacency_list['A'+str(y)] = adj_list
+    adj_list.clear()
+
+    for x in range(1,6):
+        adj_list.append(('A'+str(x),0))
+        adj_list.append(('C'+str(x),0))
+        adj_list.append(('G'+str(x),0))
+    for z in range(6,11):
+        adj_list.append(('A'+str(z),1))
+        adj_list.append(('C'+str(z),1))
+        adj_list.append(('G'+str(z),2))
+    adjacency_list['B'+str(y)] = adj_list
+    adj_list.clear()
+
+    for x in range(1,6):
+        adj_list.append(('B'+str(x),0))
+        adj_list.append(('H'+str(x),0))
+        adj_list.append(('D'+str(x),0))
+    for z in range(6,11):
+        adj_list.append(('B'+str(z),1))
+        adj_list.append(('H'+str(z),1))
+        adj_list.append(('D'+str(z),2))
+    adjacency_list['C'+str(y)] = adj_list
+
+
+
+# print(adjacency_list)
+
+# exit(2)
+
 graph1 = Graph(adjacency_list)
-graph1.a_star_algorithm('A', 'J')
+graph1.a_star_algorithm('A1', 'J')
 
 
 
