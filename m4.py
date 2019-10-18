@@ -461,10 +461,13 @@ for ii in range(len(ps)):
                 perb = int(ps[x].no)
                 if perb <= 5 and pera >5 or perb >5 and pera <= 5:
                     cost +=1
+                    cost += int(preference_matrix[pera][perb]) + int(preference_matrix[perb][pera])
             if ps[x].seat == 'F':
                 perc = int(ps[x].no)
                 if pera <= 5 and perc > 5 or pera >5 and perc <=5:
                     cost +=1
+                    cost += int(preference_matrix[pera][perc]) + int(preference_matrix[perc][pera])
+        print(cost)
     if ps[ii].seat == 'B':
         perb = ps[ii].no
         for x in range(len(ps)):
@@ -472,14 +475,18 @@ for ii in range(len(ps)):
                 pera = ps[x].no
                 if perb <= 5 and pera > 5 or pera <= 5 and perb > 5:
                     cost +=1
+                    cost += int(preference_matrix[pera][perb]) + int(preference_matrix[perb][pera])
             if ps[x].seat == 'C':
                 perc = ps[x].no
                 if perb <= 5 and perc > 5 or perc <= 5 and perb > 5:
                     cost += 1
+                    cost += int(preference_matrix[perc][perb]) + int(preference_matrix[perb][perc])
             if ps[x].seat == 'G':
                 perg = ps[x].no
                 if perb <= 5 and perg > 5 or perg <= 5 and perb > 5:
                     cost += 2
+                    cost += int(preference_matrix[perg][perb]) + int(preference_matrix[perb][perg])
+        print(cost)
     if ps[ii].seat == 'C':
         perc = ps[ii].no
         for x in range(len(ps)):
@@ -487,14 +494,18 @@ for ii in range(len(ps)):
                 perb = ps[x].no
                 if perc <= 5 and perb > 5 or perc > 5 and perb <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perc][perb]) + int(preference_matrix[perb][perc])
             if ps[x].seat == 'D':
                 perd = ps[x].no
                 if perc > 5 and perd <= 5 or perd > 5 and perc <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perc][perd]) + int(preference_matrix[perd][perc])
             if ps[x].seat == 'H':
                 perh = ps[x].no
                 if perc <= 5 and perh > 5 or perc > 5 and perh <= 5:
                     cost += 2
+                    cost += int(preference_matrix[perc][perh]) + int(preference_matrix[perh][perc])
+        print(cost)
     if ps[ii].seat == 'D':
         perd = ps[ii].no
         for x in range(len(ps)):
@@ -502,14 +513,18 @@ for ii in range(len(ps)):
                 perc = ps[x].no
                 if perd <= 5 and perc > 5 or perd > 5 and perc <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perd][perc]) + int(preference_matrix[perc][perd])
             if ps[x].seat == 'E':
                 pere = ps[x].no
                 if pere <= 5 and perd > 5 or pere > 5 and perd <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perd][pere]) + int(preference_matrix[pere][perd])
             if ps[x].seat == 'I':
                 peri = ps[x].no
                 if peri <= 5 and perd > 5 or perd <= 5 and peri > 5:
                     cost += 2
+                    cost += int(preference_matrix[perd][peri]) + int(preference_matrix[peri][perd])
+        print(cost)
     if ps[ii].seat == 'E':
         pere = ps[ii].no
         for x in range(len(ps)):
@@ -517,10 +532,13 @@ for ii in range(len(ps)):
                 perd = ps[x].no
                 if perd > 5 and pere <= 5 or perd <= 5 and pere > 5:
                     cost += 1
+                    cost += int(preference_matrix[pere][perd]) + int(preference_matrix[perd][pere])
             if ps[x].seat == 'J':
                 perj = ps[x].no
                 if pere <= 5 and perj > 5 or pere > 5 and perj <= 5:
                     cost += 2
+                    cost += int(preference_matrix[pere][perj]) + int(preference_matrix[perj][pere])
+        print(cost)
     if ps[ii].seat == 'F':
         perf = ps[ii].no
         for x in range(len(ps)):
@@ -528,10 +546,13 @@ for ii in range(len(ps)):
                 pera = ps[x].no
                 if perf > 5 and pera <= 5 or perf <= 5 and pera > 5:
                     cost += 2
+                    cost += int(preference_matrix[pera][perf]) + int(preference_matrix[perf][pera])
             if ps[x].seat == 'G':
                 perg = ps[x].no
                 if perf > 5 and perg <= 5 or perf <= 5 and perg > 5:
                     cost += 1
+                    cost += int(preference_matrix[perf][perg]) + int(preference_matrix[perg][perf])
+        print(cost)
     if ps[ii].seat == 'G':
         perg = ps[ii].no
         for x in range(len(ps)):
@@ -539,14 +560,18 @@ for ii in range(len(ps)):
                 perf = ps[x].no
                 if perf > 5 and perg <= 5 or perf <= 5 and perg > 5:
                     cost += 1
+                    cost += int(preference_matrix[perg][perf]) + int(preference_matrix[perf][perg])
             if ps[x].seat == 'H':
                 perh = ps[x].no
                 if perh > 5 and perg <= 5 or perg > 5 and perh <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perg][perh]) + int(preference_matrix[perh][perg])
             if ps[x].seat == 'B':
                 perb = ps[x].no
                 if perb > 5 and perg <= 5 or perb <= 5 and perg > 5:
                     cost += 2
+                    cost += int(preference_matrix[perg][perb]) + int(preference_matrix[perb][perg])
+        print(cost)
     if ps[ii].seat == 'H':
         perh = ps[ii].no
         for x in range(len(ps)):
@@ -554,14 +579,18 @@ for ii in range(len(ps)):
                 perg = ps[x].no
                 if perh > 5 and perg <= 5 or perg > 5 and perh <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perh][perg]) + int(preference_matrix[perg][perh])
             if ps[x].seat == 'I':
                 peri = ps[x].no
                 if perh <= 5 and peri > 5 or peri <= 5 and perh > 5:
                     cost += 1
+                    cost += int(preference_matrix[perh][peri]) + int(preference_matrix[peri][perh])
             if ps[x].seat == 'C':
                 perc = ps[x].no
                 if perh <= 5 and perc > 5 or perc <= 5 and perh > 5:
                     cost += 2
+                    cost += int(preference_matrix[perh][perc]) + int(preference_matrix[perc][perh])
+        print(cost)
     if ps[ii].seat == 'I':
         peri = ps[ii].no
         for x in range(len(ps)):
@@ -569,14 +598,18 @@ for ii in range(len(ps)):
                 perh = ps[x].no
                 if peri <= 5 and perh > 5 or peri > 5 and perh <= 5:
                     cost +=1
+                    cost += int(preference_matrix[peri][perh]) + int(preference_matrix[perh][peri])
             if ps[x].seat == 'J':
                 perj = ps[x].no
                 if perj <= 5 and peri > 5 or perj > 5 and peri <= 5:
                     cost += 1
+                    cost += int(preference_matrix[peri][perj]) + int(preference_matrix[perj][peri])
             if ps[x].seat == 'D':
                 perd = ps[x].no
                 if peri <= 5 and perd > 5 or peri > 5 and perd <= 5:
                     cost += 2
+                    cost += int(preference_matrix[peri][perd]) + int(preference_matrix[perd][peri])
+        print(cost)
     if ps[ii].seat == 'J':
         perj = ps[ii].no
         for x in range(len(ps)):
@@ -584,12 +617,13 @@ for ii in range(len(ps)):
                 peri = ps[x].no
                 if peri <= 5 and perj > 5 or peri > 5 and perj <= 5:
                     cost += 1
+                    cost += int(preference_matrix[perj][peri]) + int(preference_matrix[peri][perj])
             if ps[x].seat == 'E':
                 pere = ps[x].no
                 if pere <= 5 and perj > 5 or pere > 5 and perj <= 5:
                     cost += 2
-
-
+                    cost += int(preference_matrix[perj][pere]) + int(preference_matrix[pere][perj])
+        print(cost)
 
 
 print("COST:")

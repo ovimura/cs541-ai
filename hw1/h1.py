@@ -192,7 +192,7 @@ def main():
     print (guests)
     process_preference_matrix(d)
     for a in range(len(preference_matrix)):
-        print (preference_matrix[a])
+        print(preference_matrix[a])
 
     t = Table(n)
     t.search()
