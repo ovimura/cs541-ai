@@ -354,5 +354,10 @@ if len(excluded) > 2:
 if p != None and p1 != None:
     print("SOLUTION FOUND: ")
     print(p+p1)
+else:
+    p1 = [x for x in a.keys()]
+    print (p1)
+    print (p)
+    print ("SOLUTION FOUND: " + str(p+p1))
 
 print (b)
