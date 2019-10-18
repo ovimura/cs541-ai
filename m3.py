@@ -10,26 +10,20 @@ class Graph:
         return self.adjacency_list[v]
 
     def update_adjacency_list(self, v):
+        ''' 
+            Remove all related seats and people numbers from the space states
+        '''
         keys = [x for x in self.adjacency_list.keys() if x != v and x[1:] != v[1:] and x[:1] != v[:1]]
         keys.insert(0,v)
         excl = [x for x in self.adjacency_list.keys() if x not in keys]
-        print(excl)
         for k in excl:
             del self.adjacency_list[k]
         for k in excl:
             for key in self.adjacency_list.keys():
-                print([x[0] for x in self.adjacency_list[key]])
                 if k in [x[0] for x in self.adjacency_list[key]]:
-                    print(len(self.adjacency_list[key]))
-
                     for idx, kk in enumerate(self.adjacency_list[key]):
                         if k == kk[0]:
                             self.adjacency_list[key].remove(kk)
-                    print(len(self.adjacency_list[key]))
-
-                print([x[0] for x in self.adjacency_list[key]])
-        print(len(self.adjacency_list))
-        exit(2)
 
 
     # heuristic function with equal values for all nodes
@@ -73,10 +67,9 @@ class Graph:
                     n = v;
             if n == None:
                 print('Path does not exist!')
-                return None
+                return None, None
             # if the current node is the stop_node
             # then we begin reconstructin the path from it to the start_node
-            print (n)
             if n == stop_node:
                 reconst_path = []
                 s = []
@@ -86,17 +79,16 @@ class Graph:
                 reconst_path.append(start_node)
                 reconst_path.reverse()
                 print('Path found: {}'.format(reconst_path))
-                return reconst_path
+                return reconst_path, self.adjacency_list
             # for all neighbors of the current node do
             for (m, weight) in self.get_neighbors(n):
-                print('all neigh')
                 # if the current node isn't in both open_list and closed_list
                 # add it to open_list and note n as it's parent
                 if m not in open_list and m not in closed_list:
-                    print(m)
                     open_list.add(m)
                     parents[m] = n
                     g[m] = g[n] + weight
+                    self.update_adjacency_list(m)
                 # otherwise, check if it's quicker to first visit n, then m
                 # and if it is, update parent data and g data
                 # and if the node was in the closed_list, move it to open_list
@@ -109,11 +101,11 @@ class Graph:
                             open_list.add(m)
             # remove n from the open_list, and add it to closed_list
             # because all of his neighbors were inspected
-            print(parents)
+            # print(parents)
             open_list.remove(n)
             closed_list.add(n)
         print('Path does not exist!')
-        return None
+        return None, None
 
 adjacency_list = {}
 
@@ -313,14 +305,13 @@ for y in range(1,11):
             adj_list10.append(('E'+str(z),2))
     adjacency_list['J'+str(y)] = adj_list10
 
-
 nn = 10
 
 graph1 = Graph(adjacency_list)
 graph1.update_adjacency_list(sys.argv[1])
 graph1.update_adjacency_list(sys.argv[2])
 
-p = graph1.astar(sys.argv[1], sys.argv[2])
+p, a = graph1.astar(sys.argv[1], sys.argv[2])
 
 excluded = []
 
@@ -330,3 +321,38 @@ if len(p) < nn:
             excluded.append(k)
 
 print("Excluded letter states:" + str(excluded))
+p1 = []
+b = {}
+st = []
+
+for k in p:
+    del a[k]
+
+for k in p:
+    print (k)
+    for key in a.keys():
+        if k in [x[0] for x in a[key]]:
+            for idx, kk in enumerate(a[key]):
+                if k == kk[0]:
+                    a[key].remove(kk)
+
+
+print("a keys")
+print (a.keys())
+
+print(a)
+
+if len(excluded) > 2:
+    g2 = Graph(a)
+    for e in excluded:
+        st.append([x for x in a.keys() if x[:1] == e])
+    print(st)
+    i = st[0]
+    j = st[-1]
+    p1, b = g2.astar(i[0],j[0])
+
+if p != None and p1 != None:
+    print("SOLUTION FOUND: ")
+    print(p+p1)
+
+print (b)
