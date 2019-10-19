@@ -14,6 +14,8 @@ def process_preference_matrix(data):
     :return: None
     '''
     global preference_matrix
+    global n
+    n = int(data[0].replace('\n', ''))
     for k in range(1,n+1):
         row = data[k].split(' ')
         row[-1] = row[-1].replace('\n', '')
@@ -331,7 +333,7 @@ def build_adj_list():
                 adj_list10.append(((9,z),1))
                 adj_list10.append(((5,z),2))
         adjacent_nodes[(10,y)] = adj_list10
-        return adjacent_nodes
+
 
 def run_search(s,t):
     '''
@@ -469,7 +471,7 @@ def clear_memory():
 # exit(3)
 
 t1 = time.time()
-
+print("start search: {}".format(t1))
 for x in [1,2,3,4,5,6,7,8,9,10]:
     for y1 in range(1, 11):
         for z in [1,2,3,4,5,6,7,8,9,10]:
@@ -479,6 +481,8 @@ for x in [1,2,3,4,5,6,7,8,9,10]:
                 print_person_number_and_seat_number(ps)
                 clear_memory()
                 print()
-                if time.time() - t1 > 60:
+                t2 = time.time() - t1
+                if t2 > 60:
+                    print("stop: {}".format(t2))
                     exit(1)
 
