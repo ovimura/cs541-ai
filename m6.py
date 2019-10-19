@@ -132,202 +132,207 @@ class Graph:
         return None, None
 
 adjacency_list = {}
+def build_adj_list():
+    for y in range(1,11):
+        adj_list1 = []
+        adj_list2 = []
+        adj_list3 = []
+        adj_list4 = []
+        adj_list5 = []
+        adj_list6 = []
+        adj_list7 = []
+        adj_list8 = []
+        adj_list9 = []
+        adj_list10 = []
+    
+        for x in range(1,6):
+            if y < 6:
+                adj_list1.append(('F'+str(x),0))
+                adj_list1.append(('B'+str(x),0))
+            else:
+                adj_list1.append(('F'+str(x),2))
+                adj_list1.append(('B'+str(x),1))
+        for z in range(6,11):
+            if y > 5:
+                adj_list1.append(('F'+str(z),0))
+                adj_list1.append(('B'+str(z),0))
+            else:
+                adj_list1.append(('F'+str(z),2))
+                adj_list1.append(('B'+str(z),1))
+        adjacency_list['A'+str(y)] = adj_list1
 
-for y in range(1,11):
-    adj_list1 = []
-    adj_list2 = []
-    adj_list3 = []
-    adj_list4 = []
-    adj_list5 = []
-    adj_list6 = []
-    adj_list7 = []
-    adj_list8 = []
-    adj_list9 = []
-    adj_list10 = []
+        for x in range(1,6):
+            if y < 6:
+                adj_list2.append(('A'+str(x),0))
+                adj_list2.append(('C'+str(x),0))
+                adj_list2.append(('G'+str(x),0))
+            else:
+                adj_list2.append(('A'+str(x),1))
+                adj_list2.append(('C'+str(x),1))
+                adj_list2.append(('G'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list2.append(('A'+str(z),0))
+                adj_list2.append(('C'+str(z),0))
+                adj_list2.append(('G'+str(z),0))
+            else:
+                adj_list2.append(('A'+str(z),1))
+                adj_list2.append(('C'+str(z),1))
+                adj_list2.append(('G'+str(z),2))
+        adjacency_list['B'+str(y)] = adj_list2
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list1.append(('F'+str(x),0))
-            adj_list1.append(('B'+str(x),0))
-        else:
-            adj_list1.append(('F'+str(x),2))
-            adj_list1.append(('B'+str(x),1))
-    for z in range(6,11):
-        if y > 5:
-            adj_list1.append(('F'+str(z),0))
-            adj_list1.append(('B'+str(z),0))
-        else:
-            adj_list1.append(('F'+str(z),2))
-            adj_list1.append(('B'+str(z),1))
-    adjacency_list['A'+str(y)] = adj_list1
+        for x in range(1,6):
+            if y < 6:
+                adj_list3.append(('B'+str(x),0))
+                adj_list3.append(('H'+str(x),0))
+                adj_list3.append(('D'+str(x),0))
+            else:
+                adj_list3.append(('B'+str(x),1))
+                adj_list3.append(('D'+str(x),1))
+                adj_list3.append(('H'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list3.append(('B'+str(z),0))
+                adj_list3.append(('H'+str(z),0))
+                adj_list3.append(('D'+str(z),0))
+            else:
+                adj_list3.append(('B'+str(z),1))
+                adj_list3.append(('H'+str(z),2))
+                adj_list3.append(('D'+str(z),1))
+        adjacency_list['C'+str(y)] = adj_list3
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list2.append(('A'+str(x),0))
-            adj_list2.append(('C'+str(x),0))
-            adj_list2.append(('G'+str(x),0))
-        else:
-            adj_list2.append(('A'+str(x),1))
-            adj_list2.append(('C'+str(x),1))
-            adj_list2.append(('G'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list2.append(('A'+str(z),0))
-            adj_list2.append(('C'+str(z),0))
-            adj_list2.append(('G'+str(z),0))
-        else:
-            adj_list2.append(('A'+str(z),1))
-            adj_list2.append(('C'+str(z),1))
-            adj_list2.append(('G'+str(z),2))
-    adjacency_list['B'+str(y)] = adj_list2
+        for x in range(1,6):
+            if y < 6:
+                adj_list4.append(('C'+str(x),0))
+                adj_list4.append(('E'+str(x),0))
+                adj_list4.append(('I'+str(x),0))
+            else:
+                adj_list4.append(('C'+str(x),1))
+                adj_list4.append(('E'+str(x),1))
+                adj_list4.append(('I'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list4.append(('C'+str(z),0))
+                adj_list4.append(('E'+str(z),0))
+                adj_list4.append(('I'+str(z),0))
+            else:
+                adj_list4.append(('C'+str(z),1))
+                adj_list4.append(('E'+str(z),1))
+                adj_list4.append(('I'+str(z),2))
+        adjacency_list['D'+str(y)] = adj_list4
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list3.append(('B'+str(x),0))
-            adj_list3.append(('H'+str(x),0))
-            adj_list3.append(('D'+str(x),0))
-        else:
-            adj_list3.append(('B'+str(x),1))
-            adj_list3.append(('D'+str(x),1))
-            adj_list3.append(('H'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list3.append(('B'+str(z),0))
-            adj_list3.append(('H'+str(z),0))
-            adj_list3.append(('D'+str(z),0))
-        else:
-            adj_list3.append(('B'+str(z),1))
-            adj_list3.append(('H'+str(z),2))
-            adj_list3.append(('D'+str(z),1))
-    adjacency_list['C'+str(y)] = adj_list3
+        for x in range(1,6):
+            if y < 6:
+                adj_list5.append(('D'+str(x),0))
+                adj_list5.append(('J'+str(x),0))
+            else:
+                adj_list5.append(('D'+str(x),1))
+                adj_list5.append(('J'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list5.append(('D'+str(z),0))
+                adj_list5.append(('J'+str(z),0))
+            else:
+                adj_list5.append(('D'+str(z),1))
+                adj_list5.append(('J'+str(z),2))
+        adjacency_list['E'+str(y)] = adj_list5
+    
+        for x in range(1,6):
+            if y < 6:
+                adj_list6.append(('A'+str(x),0))
+                adj_list6.append(('G'+str(x),0))
+            else:
+                adj_list6.append(('A'+str(x),2))
+                adj_list6.append(('G'+str(x),1))
+        for z in range(6,11):
+            if y > 5:
+                adj_list6.append(('A'+str(z),0))
+                adj_list6.append(('G'+str(z),0))
+            else:
+                adj_list6.append(('A'+str(z),2))
+                adj_list6.append(('G'+str(z),1))
+        adjacency_list['F'+str(y)] = adj_list6
+    
+        for x in range(1,6):
+            if y < 6:
+                adj_list7.append(('B'+str(x),0))
+                adj_list7.append(('F'+str(x),0))
+                adj_list7.append(('H'+str(x),0))
+            else:
+                adj_list7.append(('B'+str(x),2))
+                adj_list7.append(('F'+str(x),1))
+                adj_list7.append(('H'+str(x),1))
+        for z in range(6,11):
+            if y > 5:
+                adj_list7.append(('B'+str(z),0))
+                adj_list7.append(('F'+str(z),0))
+                adj_list7.append(('H'+str(z),0))
+            else:
+                adj_list7.append(('B'+str(z),2))
+                adj_list7.append(('F'+str(z),1))
+                adj_list7.append(('H'+str(z),1))
+        adjacency_list['G'+str(y)] = adj_list7
+    
+        for x in range(1,6):
+            if y < 6:
+                adj_list8.append(('G'+str(x),0))
+                adj_list8.append(('I'+str(x),0))
+                adj_list8.append(('C'+str(x),0))
+            else:
+                adj_list8.append(('G'+str(x),1))
+                adj_list8.append(('I'+str(x),1))
+                adj_list8.append(('C'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list8.append(('G'+str(z),0))
+                adj_list8.append(('I'+str(z),0))
+                adj_list8.append(('C'+str(z),0))
+            else:
+                adj_list8.append(('G'+str(z),1))
+                adj_list8.append(('I'+str(z),1))
+                adj_list8.append(('C'+str(z),2))
+        adjacency_list['H'+str(y)] = adj_list8
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list4.append(('C'+str(x),0))
-            adj_list4.append(('E'+str(x),0))
-            adj_list4.append(('I'+str(x),0))
-        else:
-            adj_list4.append(('C'+str(x),1))
-            adj_list4.append(('E'+str(x),1))
-            adj_list4.append(('I'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list4.append(('C'+str(z),0))
-            adj_list4.append(('E'+str(z),0))
-            adj_list4.append(('I'+str(z),0))
-        else:
-            adj_list4.append(('C'+str(z),1))
-            adj_list4.append(('E'+str(z),1))
-            adj_list4.append(('I'+str(z),2))
-    adjacency_list['D'+str(y)] = adj_list4
+        for x in range(1,6):
+            if y < 6:
+                adj_list9.append(('H'+str(x),0))
+                adj_list9.append(('J'+str(x),0))
+                adj_list9.append(('D'+str(x),0))
+            else:
+                adj_list9.append(('H'+str(x),1))
+                adj_list9.append(('J'+str(x),1))
+                adj_list9.append(('D'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list9.append(('H'+str(z),0))
+                adj_list9.append(('J'+str(z),0))
+                adj_list9.append(('D'+str(z),0))
+            else:
+                adj_list9.append(('H'+str(z),1))
+                adj_list9.append(('J'+str(z),1))
+                adj_list9.append(('D'+str(z),2))
+        adjacency_list['I'+str(y)] = adj_list9
+    
+        for x in range(1,6):
+            if y < 6:
+                adj_list10.append(('I'+str(x),0))
+                adj_list10.append(('E'+str(x),0))
+            else:
+                adj_list10.append(('I'+str(x),1))
+                adj_list10.append(('E'+str(x),2))
+        for z in range(6,11):
+            if y > 5:
+                adj_list10.append(('I'+str(z),0))
+                adj_list10.append(('E'+str(z),0))
+            else:
+                adj_list10.append(('I'+str(z),1))
+                adj_list10.append(('E'+str(z),2))
+        adjacency_list['J'+str(y)] = adj_list10
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list5.append(('D'+str(x),0))
-            adj_list5.append(('J'+str(x),0))
-        else:
-            adj_list5.append(('D'+str(x),1))
-            adj_list5.append(('J'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list5.append(('D'+str(z),0))
-            adj_list5.append(('J'+str(z),0))
-        else:
-            adj_list5.append(('D'+str(z),1))
-            adj_list5.append(('J'+str(z),2))
-    adjacency_list['E'+str(y)] = adj_list5
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list6.append(('A'+str(x),0))
-            adj_list6.append(('G'+str(x),0))
-        else:
-            adj_list6.append(('A'+str(x),2))
-            adj_list6.append(('G'+str(x),1))
-    for z in range(6,11):
-        if y > 5:
-            adj_list6.append(('A'+str(z),0))
-            adj_list6.append(('G'+str(z),0))
-        else:
-            adj_list6.append(('A'+str(z),2))
-            adj_list6.append(('G'+str(z),1))
-    adjacency_list['F'+str(y)] = adj_list6
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list7.append(('B'+str(x),0))
-            adj_list7.append(('F'+str(x),0))
-            adj_list7.append(('H'+str(x),0))
-        else:
-            adj_list7.append(('B'+str(x),2))
-            adj_list7.append(('F'+str(x),1))
-            adj_list7.append(('H'+str(x),1))
-    for z in range(6,11):
-        if y > 5:
-            adj_list7.append(('B'+str(z),0))
-            adj_list7.append(('F'+str(z),0))
-            adj_list7.append(('H'+str(z),0))
-        else:
-            adj_list7.append(('B'+str(z),2))
-            adj_list7.append(('F'+str(z),1))
-            adj_list7.append(('H'+str(z),1))
-    adjacency_list['G'+str(y)] = adj_list7
+build_adj_list()
 
-    for x in range(1,6):
-        if y < 6:
-            adj_list8.append(('G'+str(x),0))
-            adj_list8.append(('I'+str(x),0))
-            adj_list8.append(('C'+str(x),0))
-        else:
-            adj_list8.append(('G'+str(x),1))
-            adj_list8.append(('I'+str(x),1))
-            adj_list8.append(('C'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list8.append(('G'+str(z),0))
-            adj_list8.append(('I'+str(z),0))
-            adj_list8.append(('C'+str(z),0))
-        else:
-            adj_list8.append(('G'+str(z),1))
-            adj_list8.append(('I'+str(z),1))
-            adj_list8.append(('C'+str(z),2))
-    adjacency_list['H'+str(y)] = adj_list8
-
-    for x in range(1,6):
-        if y < 6:
-            adj_list9.append(('H'+str(x),0))
-            adj_list9.append(('J'+str(x),0))
-            adj_list9.append(('D'+str(x),0))
-        else:
-            adj_list9.append(('H'+str(x),1))
-            adj_list9.append(('J'+str(x),1))
-            adj_list9.append(('D'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list9.append(('H'+str(z),0))
-            adj_list9.append(('J'+str(z),0))
-            adj_list9.append(('D'+str(z),0))
-        else:
-            adj_list9.append(('H'+str(z),1))
-            adj_list9.append(('J'+str(z),1))
-            adj_list9.append(('D'+str(z),2))
-    adjacency_list['I'+str(y)] = adj_list9
-
-    for x in range(1,6):
-        if y < 6:
-            adj_list10.append(('I'+str(x),0))
-            adj_list10.append(('E'+str(x),0))
-        else:
-            adj_list10.append(('I'+str(x),1))
-            adj_list10.append(('E'+str(x),2))
-    for z in range(6,11):
-        if y > 5:
-            adj_list10.append(('I'+str(z),0))
-            adj_list10.append(('E'+str(z),0))
-        else:
-            adj_list10.append(('I'+str(z),1))
-            adj_list10.append(('E'+str(z),2))
-    adjacency_list['J'+str(y)] = adj_list10
 
 nn = 10
 
@@ -360,10 +365,6 @@ for k in p:
                 if k == kk[0]:
                     a[key].remove(kk)
 
-#print("a keys")
-#print(a.keys())
-
-#print(a)
 
 if len(excluded) > 2:
     g2 = Graph(a)
@@ -384,20 +385,6 @@ else:
     p1 = [x for x in a.keys()]
     pr = p+p1
     print ("SOLUTION FOUND: |" + str(pr) + "|")
-
-# print (b)
-
-#with open("hw1/data/hw1-inst1.txt", "r") as f:
-#    d = f.readlines()
-
-#process_preference_matrix(d)
-
-#for ss in range(len(preference_matrix)):
-#    print(preference_matrix[ss])
-
-
-
-
 
 
 i = 0
@@ -478,12 +465,12 @@ for ii in range(len(ps)):
                 perb = int(ps[x].no)
                 if perb <= 5 and pera >5 or perb >5 and pera <= 5:
                     cost +=1
-                    cost += int(preference_matrix[pera][perb]) + int(preference_matrix[perb][pera])
+                    cost += int(preference_matrix[pera-1][perb-1]) + int(preference_matrix[perb-1][pera-1])
             if ps[x].seat == 'F':
                 perc = int(ps[x].no)
                 if pera <= 5 and perc > 5 or pera >5 and perc <=5:
                     cost +=1
-                    cost += int(preference_matrix[pera][perc]) + int(preference_matrix[perc][pera])
+                    cost += int(preference_matrix[pera-1][perc-1]) + int(preference_matrix[perc-1][pera-1])
         print(cost)
     if ps[ii].seat == 'B':
         perb = ps[ii].no
@@ -492,17 +479,17 @@ for ii in range(len(ps)):
                 pera = ps[x].no
                 if perb <= 5 and pera > 5 or pera <= 5 and perb > 5:
                     cost +=1
-                    cost += int(preference_matrix[pera][perb]) + int(preference_matrix[perb][pera])
+                    cost += int(preference_matrix[pera-1][perb-1]) + int(preference_matrix[perb-1][pera-1])
             if ps[x].seat == 'C':
                 perc = ps[x].no
                 if perb <= 5 and perc > 5 or perc <= 5 and perb > 5:
                     cost += 1
-                    cost += int(preference_matrix[perc][perb]) + int(preference_matrix[perb][perc])
+                    cost += int(preference_matrix[perc-1][perb-1]) + int(preference_matrix[perb-1][perc-1])
             if ps[x].seat == 'G':
                 perg = ps[x].no
                 if perb <= 5 and perg > 5 or perg <= 5 and perb > 5:
                     cost += 2
-                    cost += int(preference_matrix[perg][perb]) + int(preference_matrix[perb][perg])
+                    cost += int(preference_matrix[perg-1][perb-1]) + int(preference_matrix[perb-1][perg-1])
         print(cost)
     if ps[ii].seat == 'C':
         perc = ps[ii].no
@@ -511,17 +498,17 @@ for ii in range(len(ps)):
                 perb = ps[x].no
                 if perc <= 5 and perb > 5 or perc > 5 and perb <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perc][perb]) + int(preference_matrix[perb][perc])
+                    cost += int(preference_matrix[perc-1][perb-1]) + int(preference_matrix[perb-1][perc-1])
             if ps[x].seat == 'D':
                 perd = ps[x].no
                 if perc > 5 and perd <= 5 or perd > 5 and perc <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perc][perd]) + int(preference_matrix[perd][perc])
+                    cost += int(preference_matrix[perc-1][perd-1]) + int(preference_matrix[perd-1][perc-1])
             if ps[x].seat == 'H':
                 perh = ps[x].no
                 if perc <= 5 and perh > 5 or perc > 5 and perh <= 5:
                     cost += 2
-                    cost += int(preference_matrix[perc][perh]) + int(preference_matrix[perh][perc])
+                    cost += int(preference_matrix[perc-1][perh-1]) + int(preference_matrix[perh-1][perc-1])
         print(cost)
     if ps[ii].seat == 'D':
         perd = ps[ii].no
@@ -530,17 +517,17 @@ for ii in range(len(ps)):
                 perc = ps[x].no
                 if perd <= 5 and perc > 5 or perd > 5 and perc <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perd][perc]) + int(preference_matrix[perc][perd])
+                    cost += int(preference_matrix[perd-1][perc-1]) + int(preference_matrix[perc-1][perd-1])
             if ps[x].seat == 'E':
                 pere = ps[x].no
                 if pere <= 5 and perd > 5 or pere > 5 and perd <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perd][pere]) + int(preference_matrix[pere][perd])
+                    cost += int(preference_matrix[perd-1][pere-1]) + int(preference_matrix[pere-1][perd-1])
             if ps[x].seat == 'I':
                 peri = ps[x].no
                 if peri <= 5 and perd > 5 or perd <= 5 and peri > 5:
                     cost += 2
-                    cost += int(preference_matrix[perd][peri]) + int(preference_matrix[peri][perd])
+                    cost += int(preference_matrix[perd-1][peri-1]) + int(preference_matrix[peri-1][perd-1])
         print(cost)
     if ps[ii].seat == 'E':
         pere = ps[ii].no
@@ -549,12 +536,12 @@ for ii in range(len(ps)):
                 perd = ps[x].no
                 if perd > 5 and pere <= 5 or perd <= 5 and pere > 5:
                     cost += 1
-                    cost += int(preference_matrix[pere][perd]) + int(preference_matrix[perd][pere])
+                    cost += int(preference_matrix[pere-1][perd-1]) + int(preference_matrix[perd-1][pere-1])
             if ps[x].seat == 'J':
                 perj = ps[x].no
                 if pere <= 5 and perj > 5 or pere > 5 and perj <= 5:
                     cost += 2
-                    cost += int(preference_matrix[pere][perj]) + int(preference_matrix[perj][pere])
+                    cost += int(preference_matrix[pere-1][perj-1]) + int(preference_matrix[perj-1][pere-1])
         print(cost)
     if ps[ii].seat == 'F':
         perf = ps[ii].no
@@ -563,12 +550,12 @@ for ii in range(len(ps)):
                 pera = ps[x].no
                 if perf > 5 and pera <= 5 or perf <= 5 and pera > 5:
                     cost += 2
-                    cost += int(preference_matrix[pera][perf]) + int(preference_matrix[perf][pera])
+                    cost += int(preference_matrix[pera-1][perf-1]) + int(preference_matrix[perf-1][pera-1])
             if ps[x].seat == 'G':
                 perg = ps[x].no
                 if perf > 5 and perg <= 5 or perf <= 5 and perg > 5:
                     cost += 1
-                    cost += int(preference_matrix[perf][perg]) + int(preference_matrix[perg][perf])
+                    cost += int(preference_matrix[perf-1][perg-1]) + int(preference_matrix[perg-1][perf-1])
         print(cost)
     if ps[ii].seat == 'G':
         perg = ps[ii].no
@@ -577,17 +564,17 @@ for ii in range(len(ps)):
                 perf = ps[x].no
                 if perf > 5 and perg <= 5 or perf <= 5 and perg > 5:
                     cost += 1
-                    cost += int(preference_matrix[perg][perf]) + int(preference_matrix[perf][perg])
+                    cost += int(preference_matrix[perg-1][perf-1]) + int(preference_matrix[perf-1][perg-1])
             if ps[x].seat == 'H':
                 perh = ps[x].no
                 if perh > 5 and perg <= 5 or perg > 5 and perh <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perg][perh]) + int(preference_matrix[perh][perg])
+                    cost += int(preference_matrix[perg-1][perh-1]) + int(preference_matrix[perh-1][perg-1])
             if ps[x].seat == 'B':
                 perb = ps[x].no
                 if perb > 5 and perg <= 5 or perb <= 5 and perg > 5:
                     cost += 2
-                    cost += int(preference_matrix[perg][perb]) + int(preference_matrix[perb][perg])
+                    cost += int(preference_matrix[perg-1][perb-1]) + int(preference_matrix[perb-1][perg-1])
         print(cost)
     if ps[ii].seat == 'H':
         perh = ps[ii].no
@@ -596,17 +583,17 @@ for ii in range(len(ps)):
                 perg = ps[x].no
                 if perh > 5 and perg <= 5 or perg > 5 and perh <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perh][perg]) + int(preference_matrix[perg][perh])
+                    cost += int(preference_matrix[perh-1][perg-1]) + int(preference_matrix[perg-1][perh-1])
             if ps[x].seat == 'I':
                 peri = ps[x].no
                 if perh <= 5 and peri > 5 or peri <= 5 and perh > 5:
                     cost += 1
-                    cost += int(preference_matrix[perh][peri]) + int(preference_matrix[peri][perh])
+                    cost += int(preference_matrix[perh-1][peri-1]) + int(preference_matrix[peri-1][perh-1])
             if ps[x].seat == 'C':
                 perc = ps[x].no
                 if perh <= 5 and perc > 5 or perc <= 5 and perh > 5:
                     cost += 2
-                    cost += int(preference_matrix[perh][perc]) + int(preference_matrix[perc][perh])
+                    cost += int(preference_matrix[perh-1][perc-1]) + int(preference_matrix[perc-1][perh-1])
         print(cost)
     if ps[ii].seat == 'I':
         peri = ps[ii].no
@@ -615,17 +602,18 @@ for ii in range(len(ps)):
                 perh = ps[x].no
                 if peri <= 5 and perh > 5 or peri > 5 and perh <= 5:
                     cost +=1
-                    cost += int(preference_matrix[peri][perh]) + int(preference_matrix[perh][peri])
+                    print("{} {}".format(peri, perh))
+                    cost += int(preference_matrix[peri-1][perh-1]) + int(preference_matrix[perh-1][peri-1])
             if ps[x].seat == 'J':
                 perj = ps[x].no
                 if perj <= 5 and peri > 5 or perj > 5 and peri <= 5:
                     cost += 1
-                    cost += int(preference_matrix[peri][perj]) + int(preference_matrix[perj][peri])
+                    cost += int(preference_matrix[peri-1][perj-1]) + int(preference_matrix[perj-1][peri-1])
             if ps[x].seat == 'D':
                 perd = ps[x].no
                 if peri <= 5 and perd > 5 or peri > 5 and perd <= 5:
                     cost += 2
-                    cost += int(preference_matrix[peri][perd]) + int(preference_matrix[perd][peri])
+                    cost += int(preference_matrix[peri-1][perd-1]) + int(preference_matrix[perd-1][peri-1])
         print(cost)
     if ps[ii].seat == 'J':
         perj = ps[ii].no
@@ -634,12 +622,12 @@ for ii in range(len(ps)):
                 peri = ps[x].no
                 if peri <= 5 and perj > 5 or peri > 5 and perj <= 5:
                     cost += 1
-                    cost += int(preference_matrix[perj][peri]) + int(preference_matrix[peri][perj])
+                    cost += int(preference_matrix[perj-1][peri-1]) + int(preference_matrix[peri-1][perj-1])
             if ps[x].seat == 'E':
                 pere = ps[x].no
                 if pere <= 5 and perj > 5 or pere > 5 and perj <= 5:
                     cost += 2
-                    cost += int(preference_matrix[perj][pere]) + int(preference_matrix[pere][perj])
+                    cost += int(preference_matrix[perj-1][pere-1]) + int(preference_matrix[pere-1][perj-1])
         print(cost)
 
 
