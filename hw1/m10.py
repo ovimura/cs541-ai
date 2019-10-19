@@ -31,13 +31,16 @@ class Person:
         self.g = g
         self.h = h
 
-class Host(Person):
     def r(self):
         return self.type
 
-class Guest(Person):
-    def r(self):
-        return self.type
+# class Host(Person):
+#     def r(self):
+#         return self.type
+#
+# class Guest(Person):
+#     def r(self):
+#         return self.type
 
 class Table:
     def __init__(self, adjacent_nodes):
@@ -48,57 +51,26 @@ class Table:
     def get_adjacent_nodes(self, v):
         return self.adjacent_nodes[v]
 
-    def update_adjacency_list(self, v):
-        ''' 
-            Remove all related seats and people numbers from the space states
-        '''
-        keys = [x for x in self.adjacency_nodes.keys() if x != v and x[1:] != v[1:] and x[:1] != v[:1]]
-        keys.insert(0,v)
-        excl = [x for x in self.adjacency_nodes.keys() if x not in keys]
-        for k in excl:
-            del self.adjacency_nodes[k]
-        for k in excl:
-            for key in self.adjacency_nodes.keys():
-                if k in [x[0] for x in self.adjacency_nodes[key]]:
-                    for idx, kk in enumerate(self.adjacency_nodes[key]):
-                        if k == kk[0]:
-                            self.adjacency_nodes[key].remove(kk)
-
-    # heuristic function with equal values for all nodes
-    def h(self, n):
-        H = {}
-        for x in range(1,11):
-            H['A'+str(x)] = 1
-            H['B'+str(x)] = 1
-            H['C'+str(x)] = 1
-            H['D'+str(x)] = 1
-            H['E'+str(x)] = 1
-            H['F'+str(x)] = 1
-            H['G'+str(x)] = 1
-            H['H'+str(x)] = 1
-            H['I'+str(x)] = 1
-            H['J'+str(x)] = 1
-        return H[n]
-
+    # heuristic function with values taken from preference matrix
     def h(self, v, n):
         self.H[(v[1],n[1])] = int(preference_matrix[v[1]-1][n[1]-1])
         self.H[(n[1],v[1])] = int(preference_matrix[n[1]-1][v[1]-1])
         return self.H[(n[1],v[1])]
 
-    def astar(self, start_node, stop_node):
+    def astar(self, s, t):
         # open_list is a list of nodes which have been visited, but who's neighbors
         # haven't all been inspected, starts off with the start node
         # closed_list is a list of nodes which have been visited
         # and who's neighbors have been inspected
-        open_list = set([start_node])
+        open_list = set([s])
         closed_list = set([])
         # g contains current distances from start_node to all other nodes
         # the default value (if it's not found in the map) is +infinity
         self.g = {}
-        self.g[start_node] = 0
+        self.g[s] = 0
         # parents contains an adjacency map of all nodes
-        parents = {}
-        parents[start_node] = start_node
+        paths = {}
+        paths[s] = s
 
         while len(open_list) > 0:
             n = None
@@ -111,12 +83,12 @@ class Table:
                 return None, None
             # if the current node is the stop_node
             # then we begin reconstructin the path from it to the start_node
-            if n == stop_node:
+            if n == t:
                 reconst_path = []
-                while parents[n] != n:
+                while paths[n] != n:
                     reconst_path.append(n)
-                    n = parents[n]
-                reconst_path.append(start_node)
+                    n = paths[n]
+                reconst_path.append(s)
                 reconst_path.reverse()
                 # print('Path found: {}'.format(reconst_path))
                 return reconst_path, self.adjacent_nodes
@@ -126,7 +98,7 @@ class Table:
                 # add it to open_list and note n as it's parent
                 if m not in open_list and m not in closed_list:
                     open_list.add(m)
-                    parents[m] = n
+                    paths[m] = n
                     self.g[m] = self.g[n] + weight
                     # self.update_adjacency_list(m)
                 # otherwise, check if it's quicker to first visit n, then m
@@ -135,7 +107,7 @@ class Table:
                 else:
                     if self.g[m] > self.g[n] + weight:
                         self.g[m] = self.g[n] + weight
-                        parents[m] = n
+                        paths[m] = n
                         if m in closed_list:
                             closed_list.remove(m)
                             open_list.add(m)
@@ -347,10 +319,11 @@ def build_adj_list():
 
 def run_search(s,t):
     global pr
+    global ps
     global n
     build_adj_list()
-    graph1 = Table(adjacent_nodes)
-    p, a = graph1.astar(s,t)
+    tbl = Table(adjacent_nodes)
+    p, a = tbl.astar(s,t)
     keys = [x for x in a.keys()]
     pr = p
     alln = range(1,n+1)
@@ -384,8 +357,58 @@ def run_search(s,t):
                     x.remove(k[0])
                     y.remove(k[1])
                     pr.append(k)
-    print(len(pr))
+    for node in pr:
+        ps.append(Person(node[0], node[1], 0 if int(node[1]) == 0 else 1, 0, 0))
     return pr
+
+def score(ps):
+    global preference_matrix
+    global n
+    sc = 0
+    h = 0
+    r1 = sorted([x for x in ps if x.seat < n/2+1], key=lambda x:x.seat)
+    r2 = sorted([x for x in ps if x.seat > n/2], key=lambda x:x.seat)
+    for i, item in enumerate(r1):
+        if item.seat == 1 or item.seat == n/2:
+            if item.seat == 1 and r1[0].type != r1[1].type:
+                sc += 2
+            h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
+            h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
+            if item.seat == 1 and r1[0].type != r2[0].type:
+                sc += 4
+            h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
+            h += int(preference_matrix[int(r2[1].no)-1][int(r1[0].no)-1])
+            if item.seat == n/2 and r1[int(n/2)-1].type != r1[int(n/2)-2].type:
+                sc += 2
+            h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
+            h += int(preference_matrix[int(r1[int(n/2)-2].no)-1][int(r1[int(n/2)-1].no)-1])
+            if item.seat == n/2 and r1[int(n/2)-1].type != r2[int(n/2)-1].type:
+                sc += 4
+            h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
+            h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+        else:
+            if r1[i].type != r1[i+1].type:
+                sc += 1
+                h += int(preference_matrix[int(r1[i].no)][int(r1[int(i+1)].no)])
+                h += int(preference_matrix[int(r1[int(i+1)].no)][int(r1[i].no)])
+            if r1[i-1].type != r1[i].type:
+                sc += 1
+                h += int(preference_matrix[int(r1[i-1].no)][int(r1[int(i)].no)])
+                h += int(preference_matrix[int(r1[int(i)].no)][int(r1[i-1].no)])
+            if r1[i].type != r2[i].type:
+                sc += 4
+                h += int(preference_matrix[int(r1[i].no)][int(r2[int(i)].no)])
+                h += int(preference_matrix[int(r2[int(i)].no)][int(r1[i].no)])
+            if r2[i].type != r2[i+1].type:
+                sc += 1
+                h += int(preference_matrix[int(r2[i].no)][int(r2[int(i+1)].no)])
+                h += int(preference_matrix[int(r2[int(i+1)].no)][int(r2[i].no)])
+            if r2[i-1].type != r2[i].type:
+                sc += 1
+                h += int(preference_matrix[int(r2[i-1].no)][int(r2[int(i)].no)])
+                h += int(preference_matrix[int(r2[int(i)].no)][int(r2[i-1].no)])
+    sc += h
+    return sc
 
 def print_person_number_and_seat_number(ps):
     for x in range(len(ps)):
@@ -394,24 +417,25 @@ def print_person_number_and_seat_number(ps):
 def clear_memory():
     global adjacent_nodes
     global pr
-    #global ps
+    global ps
     adjacent_nodes.clear()
     pr.clear()
-    #ps.clear()
+    ps.clear()
 
-
-
-print(run_search((1,1), (10,2)))
-print_person_number_and_seat_number(ps)
-clear_memory()
-
-exit(3)
+# print(run_search((1,1), (10,2)))
+# print(score(ps))
+# print_person_number_and_seat_number(ps)
+# clear_memory()
+#
+# exit(3)
 
 for x in [1,2,3,4,5,6,7,8,9,10]:
     for y1 in range(1, 11):
         for z in [1,2,3,4,5,6,7,8,9,10]:
             for y in range(1,11):
-                print(run_search((x,y1), (z,y)))
+                run_search((x,y1), (z,y))
+                print(score(ps))
                 print_person_number_and_seat_number(ps)
                 clear_memory()
+                print()
 
