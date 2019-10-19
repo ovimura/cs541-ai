@@ -358,7 +358,7 @@ def run_search(s,t):
                     y.remove(k[1])
                     pr.append(k)
     for node in pr:
-        ps.append(Person(node[0], node[1], 0 if int(node[1]) == 0 else 1, 0, 0))
+        ps.append(Person(node[0], node[1], 0 if int(node[1]) <= int(n/2) else 1, 0, 0))
     return pr
 
 def score(ps):
@@ -389,24 +389,24 @@ def score(ps):
         else:
             if r1[i].type != r1[i+1].type:
                 sc += 1
-                h += int(preference_matrix[int(r1[i].no)][int(r1[int(i+1)].no)])
-                h += int(preference_matrix[int(r1[int(i+1)].no)][int(r1[i].no)])
+                h += int(preference_matrix[int(r1[i].no)-1][int(r1[int(i+1)].no)-1])
+                h += int(preference_matrix[int(r1[int(i+1)].no)-1][int(r1[i].no)-1])
             if r1[i-1].type != r1[i].type:
                 sc += 1
-                h += int(preference_matrix[int(r1[i-1].no)][int(r1[int(i)].no)])
-                h += int(preference_matrix[int(r1[int(i)].no)][int(r1[i-1].no)])
+                h += int(preference_matrix[int(r1[i-1].no)-1][int(r1[int(i)].no)-1])
+                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
             if r1[i].type != r2[i].type:
                 sc += 4
-                h += int(preference_matrix[int(r1[i].no)][int(r2[int(i)].no)])
-                h += int(preference_matrix[int(r2[int(i)].no)][int(r1[i].no)])
+                h += int(preference_matrix[int(r1[i].no)-1][int(r2[int(i)].no)-1])
+                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r1[i].no)-1])
             if r2[i].type != r2[i+1].type:
                 sc += 1
-                h += int(preference_matrix[int(r2[i].no)][int(r2[int(i+1)].no)])
-                h += int(preference_matrix[int(r2[int(i+1)].no)][int(r2[i].no)])
+                h += int(preference_matrix[int(r2[i].no)-1][int(r2[int(i+1)].no)-1])
+                h += int(preference_matrix[int(r2[int(i+1)].no)-1][int(r2[i].no)-1])
             if r2[i-1].type != r2[i].type:
                 sc += 1
-                h += int(preference_matrix[int(r2[i-1].no)][int(r2[int(i)].no)])
-                h += int(preference_matrix[int(r2[int(i)].no)][int(r2[i-1].no)])
+                h += int(preference_matrix[int(r2[i-1].no)-1][int(r2[int(i)].no)-1])
+                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
     sc += h
     return sc
 
