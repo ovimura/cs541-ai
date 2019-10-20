@@ -1,4 +1,5 @@
 from collections import defaultdict
+import time
 
 preference_matrix = []
 adjacent_nodes = {}
@@ -7,6 +8,11 @@ pr = [] # solution of the run
 ps = [] # persons
 
 def process_preference_matrix(data):
+    '''
+    It processes the preference matrix.
+    :param data: the dataset to be stored in the preference matrix
+    :return: None
+    '''
     global preference_matrix
     for k in range(1,n+1):
         row = data[k].split(' ')
@@ -14,17 +20,27 @@ def process_preference_matrix(data):
         preference_matrix.append(row)
 
 def read_dataset(data):
-    global preference_matrix
+    '''
+    It reads the given dataset url and process the preference matrix
+    :param data: the url of the datase
+    :return: None
+    '''
     with open(data, "r") as f:
         d = f.readlines()
     process_preference_matrix(d)
-    # for ss in range(len(preference_matrix)):
-    #     print(preference_matrix[ss])
 
 read_dataset("data/hw1-inst1.txt")
 
 class Person:
     def __init__(self, seat, no, type, g, h):
+        '''
+        The constructor for the class Person
+        :param seat: the seat where the person seats
+        :param no: the number of the person
+        :param type: the type of the person; 0 -> host, 1 -> guest
+        :param g: the cost from the current seat to adjacent and opposite seat
+        :param h: the heuristic of the current person
+        '''
         self.seat = seat
         self.no = no
         self.type = type # 0 host, 1 guest
@@ -32,94 +48,93 @@ class Person:
         self.h = h
 
     def r(self):
+        '''
+        It returns the role of the person
+        :return: 0 for host, 1 for guest
+        '''
         return self.type
-
-# class Host(Person):
-#     def r(self):
-#         return self.type
-#
-# class Guest(Person):
-#     def r(self):
-#         return self.type
 
 class Table:
     def __init__(self, adjacent_nodes):
+        '''
+        The constructor of the Table class
+        :param adjacent_nodes: the list of all the adjacent nodes of the graph - Table
+        '''
         self.adjacent_nodes = adjacent_nodes
         self.H = {}
         self.g = {}
 
     def get_adjacent_nodes(self, v):
+        '''
+        It gets the adjacent nodes for the given node.
+        :param v: the given node
+        :return: the adjacent nodes of the given node
+        '''
         return self.adjacent_nodes[v]
 
-    # heuristic function with values taken from preference matrix
     def h(self, v, n):
+        '''
+        The heuristic function with values taken from preference matrix
+        :param v: the current node heuristic to be calculated
+        :param n: the target node heuristic to be calculated
+        :return: the heuristic value h(p1,p2) + h(p2,p1)
+        '''
         self.H[(v[1],n[1])] = int(preference_matrix[v[1]-1][n[1]-1])
         self.H[(n[1],v[1])] = int(preference_matrix[n[1]-1][v[1]-1])
         return self.H[(n[1],v[1])]
 
     def astar(self, s, t):
-        # open_list is a list of nodes which have been visited, but who's neighbors
-        # haven't all been inspected, starts off with the start node
-        # closed_list is a list of nodes which have been visited
-        # and who's neighbors have been inspected
-        open_list = set([s])
+        '''
+          The frontier is a list of nodes which have been visited, but who's neighbors
+          haven't all been inspected, starts off with the start node
+          closed_list is a list of nodes which have been visited
+          and who's neighbors have been inspected
+        :param s: the start node to start the A* searching
+        :param t: the target node to stop the A* searching
+        :return: the path, if it exists from s, t with maximum cost
+        '''
+        frontier = set([s])
         closed_list = set([])
-        # g contains current distances from start_node to all other nodes
-        # the default value (if it's not found in the map) is +infinity
-        self.g = {}
         self.g[s] = 0
-        # parents contains an adjacency map of all nodes
         paths = {}
         paths[s] = s
 
-        while len(open_list) > 0:
+        while len(frontier) > 0:
             n = None
-            # find a node with the lowest value of f() - evaluation function
-            for v in open_list:
+            for v in frontier:
                 if n == None or self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v):
                     n = v
             if n == None:
-                #print('Path does not exist!')
                 return None, None
-            # if the current node is the stop_node
-            # then we begin reconstructin the path from it to the start_node
             if n == t:
-                reconst_path = []
+                the_path = []
                 while paths[n] != n:
-                    reconst_path.append(n)
+                    the_path.append(n)
                     n = paths[n]
-                reconst_path.append(s)
-                reconst_path.reverse()
-                # print('Path found: {}'.format(reconst_path))
-                return reconst_path, self.adjacent_nodes
-            # for all neighbors of the current node do
-            for (m, weight) in self.get_adjacent_nodes(n):
-                # if the current node isn't in both open_list and closed_list
-                # add it to open_list and note n as it's parent
-                if m not in open_list and m not in closed_list:
-                    open_list.add(m)
+                the_path.append(s)
+                the_path.reverse()
+                return the_path, self.adjacent_nodes
+            for (m, w) in self.get_adjacent_nodes(n):
+                if m not in frontier and m not in closed_list:
+                    frontier.add(m)
                     paths[m] = n
-                    self.g[m] = self.g[n] + weight
-                    # self.update_adjacency_list(m)
-                # otherwise, check if it's quicker to first visit n, then m
-                # and if it is, update parent data and g data
-                # and if the node was in the closed_list, move it to open_list
+                    self.g[m] = self.g[n] + w
                 else:
-                    if self.g[m] > self.g[n] + weight:
-                        self.g[m] = self.g[n] + weight
+                    if self.g[m] > self.g[n] + w:
+                        self.g[m] = self.g[n] + w
                         paths[m] = n
                         if m in closed_list:
                             closed_list.remove(m)
-                            open_list.add(m)
-            # remove n from the open_list, and add it to closed_list
-            # because all of his neighbors were inspected
-            # print(parents)
-            open_list.remove(n)
+                            frontier.add(m)
+            frontier.remove(n)
             closed_list.add(n)
-        #print('Path does not exist!')
         return None, None
 
 def build_adj_list():
+    '''
+    It build the adjacent nodes list for 10 x 10 table.
+    :return: the adjacent_nodes list
+    '''
     global adjacent_nodes
     for y in range(1,11):
         adj_list1 = []
@@ -316,8 +331,15 @@ def build_adj_list():
                 adj_list10.append(((9,z),1))
                 adj_list10.append(((5,z),2))
         adjacent_nodes[(10,y)] = adj_list10
+        return adjacent_nodes
 
 def run_search(s,t):
+    '''
+    It runs the search from node s to node t.
+    :param s: the start node to begin the search
+    :param t: the target node to stop the search
+    :return: a list of all nodes found with maximum cost from s to t
+    '''
     global pr
     global ps
     global n
@@ -362,6 +384,14 @@ def run_search(s,t):
     return pr
 
 def score(ps):
+    '''
+    It computes the score for all the persons at the table by the following criteria
+      1 point for every adjacent pair (seated next to each other) of people with one a host and the other a guest
+      2 points for every opposite pair (seated across from each other) of people with one a host and the other a guest
+      h(p1, p2) + h(p2, p1) points for every adjacent or opposite pair of people p1, p2
+    :param ps: a list of all persons at the table
+    :return: the score of the table
+    '''
     global preference_matrix
     global n
     sc = 0
@@ -411,10 +441,19 @@ def score(ps):
     return sc
 
 def print_person_number_and_seat_number(ps):
+    '''
+    It prints <person number> and <seat number> with a space between
+    :param ps: the list of all persons to be printed
+    :return: None
+    '''
     for x in range(len(ps)):
         print("{} {}".format(ps[x].no, ps[x].seat))
 
 def clear_memory():
+    '''
+    It cleans the memory allocated during the program execution
+    :return: None
+    '''
     global adjacent_nodes
     global pr
     global ps
@@ -429,6 +468,8 @@ def clear_memory():
 #
 # exit(3)
 
+t1 = time.time()
+
 for x in [1,2,3,4,5,6,7,8,9,10]:
     for y1 in range(1, 11):
         for z in [1,2,3,4,5,6,7,8,9,10]:
@@ -438,4 +479,6 @@ for x in [1,2,3,4,5,6,7,8,9,10]:
                 print_person_number_and_seat_number(ps)
                 clear_memory()
                 print()
+                if time.time() - t1 > 60:
+                    exit(1)
 
