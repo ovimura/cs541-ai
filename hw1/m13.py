@@ -597,16 +597,16 @@ def clear_memory():
 
 t1 = time.time()
 print("start: {}".format(t1))
-for x in [1,2,3,4,5,6,7,8,9,10]:
-    for y1 in range(1, 11):
-        for z in [1,2,3,4,5,6,7,8,9,10]:
-            for y in range(1,11):
+for x in range(1,31):
+    for y1 in range(1,31):
+        for z in range(1,31):
+            for y in range(1,31):
                 run_search((x,y1), (z,y))
                 print(score(ps))
                 print_person_number_and_seat_number(ps)
                 clear_memory()
                 print()
-                t2 = time.time()
+                t2 = time.time() - t1
                 if t2 > 60:
                     print("stop: {}".format(t2))
                     exit(1)
