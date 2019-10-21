@@ -602,6 +602,8 @@ def clear_memory():
     pr.clear()
     ps.clear()
 
+# Perform complete search in all possible combinations of seats and persons,
+# The program execution terminates after 60 seconds
 t1 = time.time()
 
 for x in range(1,n+1):
