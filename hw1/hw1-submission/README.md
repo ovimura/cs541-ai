@@ -2,4 +2,40 @@
 #### Student: Ovidiu Mura
 #### Date: Oct 20, 2019
 #### Assignment 1: Dinner Party
+##### Requirements: https://moodle.cs.pdx.edu/mod/assign/view.php?id=146
+
+I implemented the solution using Python programming language on the following hardware specifications:
+
+###### Server: linux.cs.pdx.edu
+###### OS: Ubuntu 18.04.3 LTS
+###### Memory: 24GiB, 3 x 8GiB SODIMM DDR3 Synchronous 1600 MHz
+###### Architecture:        x86_64
+###### CPU op-mode(s):      32-bit, 64-bit
+###### Byte Order:          Little Endian
+###### CPU(s):              12
+###### On-line CPU(s) list: 0-11
+###### Thread(s) per core:  1
+###### Core(s) per socket:  1
+###### Socket(s):           12
+###### NUMA node(s):        1
+###### Vendor ID:           GenuineIntel
+###### CPU family:          6
+###### Model:               58
+###### Model name:          Intel Xeon E3-12xx v2 (Ivy Bridge)
+###### Stepping:            9
+###### CPU MHz:             2499.998
+###### BogoMIPS:            4999.99
+###### Hypervisor vendor:   KVM
+###### Virtualization type: full
+###### L1d cache:           32K
+###### L1i cache:           32K
+###### L2 cache:            4096K
+###### NUMA node0 CPU(s):   0-11
+
+I read the datasets (3 datasets, n=10, n=30, n=30) from the 'data' directory which is placed in the current directory.
+I store the content of the dataset representing the preference matrix in memory and also the program reads the value of 'n' from the first line of the dataset file.
+
+Once the n is known, I generate the adjacent nodes of the graph. The table represents an undirected weighted graph with weights as described in the requirements, 1 for different adjacent persons types (host/guest) and 1 for different opposite adjacent persons types.
+I perform a Complete search useing a different version of A* searrch algorithm, select the path of maximum cost, for each selection, such as: 
+# self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v), line 124 in hw1.py file
 
