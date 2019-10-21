@@ -49,3 +49,11 @@ I perform a Complete search useing a different version of A* searrch algorithm, 
 After the A* search returns the found nodes, I check the result and add the missing nodes which represents a combination of (seats, person number), run_search method always returns a state of the table which represents a (seat, person_no) for total of seats.
 
 Each node of the result of the A* search is sotred in a Person object. The score is computed for the complete table using the g + h where g is the cost of each node and h is the heuristic function computed from the preference matrix, then the score is printed then all the (seat, person_number) combinations of the table with n seats and n persons.
+
+
+Results:
+The first result set for n=10 is the largest from the three sets, because the graph with n=10 is smaller than the other two and the preference matrix is smaller with less variable cels' magnitudes compared with the other 2 sets. 
+
+The second result set for n=30 is the second largest from the three sets, then the third result set.
+
+Comparing the second result set with the third result set, I can see the preference matrix computation takes more work for the third dataset. There are more negative values in the third dataset's preference matrix and they produce more magnitude defifference in minimums and maximums for heuristic values compared to the second datase.
