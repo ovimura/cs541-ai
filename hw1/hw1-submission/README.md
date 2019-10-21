@@ -57,3 +57,11 @@ The first result set for n=10 is the largest from the three sets, because the gr
 The second result set for n=30 is the second largest from the three sets, then the third result set.
 
 Comparing the second result set with the third result set, I can see the preference matrix computation takes more work for the third dataset. There are more negative values in the third dataset's preference matrix and they produce more magnitude defifference in minimums and maximums for heuristic values compared to the second datase.
+
+Output score values for the three datasets are as following:
+
+n = 10, instance 1, range values from -20 to 100
+n = 30, instance 2, range values from 0 to 100
+n = 30, instance 3, range values from -10 to 70
+
+The results are takes the program running execution of 60 seconds.
