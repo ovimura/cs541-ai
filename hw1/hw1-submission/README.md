@@ -65,3 +65,4 @@ n = 30, instance 2, range values from 0 to 100
 n = 30, instance 3, range values from -10 to 70
 
 The results are taken from the program running execution of 60 seconds.
+Report showing the scores are presented in the included file, hw1_report.ods
