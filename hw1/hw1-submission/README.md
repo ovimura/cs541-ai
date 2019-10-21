@@ -32,6 +32,12 @@ I implemented the solution using Python programming language on the following ha
 ###### L2 cache:            4096K
 ###### NUMA node0 CPU(s):   0-11
 
+Abstraction: The table represents an undirected weighted graph with each seat representing a node. Weights are 1,2, and 0 assigned based on the combination person types they form as described in requirements.
+
+The adjacent nodes are generated based on the value of n, and the A* search is performed on this graph. 
+
+I use a combination of all possible (seat, person) as input for the program.
+
 I read the datasets (3 datasets, n=10, n=30, n=30) from the 'data' directory which is placed in the current directory.
 I store the content of the dataset representing the preference matrix in memory and also the program reads the value of 'n' from the first line of the dataset file.
 
