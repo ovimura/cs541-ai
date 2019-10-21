@@ -5,6 +5,12 @@
 #### Assignment 1: Dinner Party
 ##### Requirements: https://moodle.cs.pdx.edu/mod/assign/view.php?id=146
 
+#### To execute the project run the following command:
+###### make
+#### 
+#### The make command will execute all 3 goals, each goal executing one of the 3 data instances
+#### 
+
 I implemented the solution using Python programming language on the following hardware specifications:
 
 ###### Server: linux.cs.pdx.edu
