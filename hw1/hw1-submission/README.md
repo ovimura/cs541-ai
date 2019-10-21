@@ -39,3 +39,6 @@ Once the n is known, I generate the adjacent nodes of the graph. The table repre
 I perform a Complete search useing a different version of A* searrch algorithm, select the path of maximum cost, for each selection, such as: 
 ###### self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v), line 124 in hw1.py file
 
+After the A* search returns the found nodes, I check the result and add the missing nodes which represents a combination of (seats, person number), run_search method always returns a state of the table which represents a (seat, person_no) for total of seats.
+
+Each node of the result of the A* search is sotred in a Person object. The score is computed for the complete table using the g + h where g is the cost of each node and h is the heuristic function computed from the preference matrix, then the score is printed then all the (seat, person_number) combinations of the table with n seats and n persons.
