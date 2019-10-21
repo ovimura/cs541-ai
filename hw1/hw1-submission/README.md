@@ -37,5 +37,5 @@ I store the content of the dataset representing the preference matrix in memory 
 
 Once the n is known, I generate the adjacent nodes of the graph. The table represents an undirected weighted graph with weights as described in the requirements, 1 for different adjacent persons types (host/guest) and 1 for different opposite adjacent persons types.
 I perform a Complete search useing a different version of A* searrch algorithm, select the path of maximum cost, for each selection, such as: 
-# self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v), line 124 in hw1.py file
+###### self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v), line 124 in hw1.py file
 
