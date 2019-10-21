@@ -1,5 +1,6 @@
 #### CS541 - Artificial Intelligence
 #### Student: Ovidiu Mura
+#### Email: mura@pdx.edu
 #### Date: Oct 20, 2019
 #### Assignment 1: Dinner Party
 ##### Requirements: https://moodle.cs.pdx.edu/mod/assign/view.php?id=146
