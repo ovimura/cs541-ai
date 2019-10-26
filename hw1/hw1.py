@@ -65,12 +65,13 @@ class Person:
         '''
         return self.type
 
-if len(sys.argv) != 2:
-    print("usage: python3 <url_of_the_dataset>")
+if len(sys.argv) != 3:
+    print("usage: python3 hw1.py <running_time_in_seconds> <url_of_the_dataset>")
     exit(-1)
 
-# read_dataset("data/hw1-inst3.txt")
-read_dataset(sys.argv[1])
+sec = int(sys.argv[1])
+
+read_dataset(sys.argv[2])
 
 class Table:
     def __init__(self, adjacent_nodes):
@@ -492,7 +493,6 @@ def run_search(s,t):
     alln = [x for x in range(1, n+1)]
     keys = [x for x in a.keys()]
 
-
     # remove the duplicate seats or persons from the A* found path
     p1 = [x[0] for x in p]
     p2 = [x[1] for x in p]
@@ -512,7 +512,6 @@ def run_search(s,t):
                 p.remove(e)
         p2 = [x[1] for x in p]
         ee = [item for item, count in collections.Counter(p2).items() if count > 1]
-
 
     # adding vertices not included into A*
     x = [xx for xx in alln if xx not in [xxx[0] for xxx in p]]
@@ -570,17 +569,9 @@ def score(ps):
             if item.seat == n/2 and (r1[int(n/2)-1].type == r1[int(n/2)-2].type or r1[int(n/2)-1].type == r2[int(n/2)-1].type or r2[int(n/2)-1].type == r2[int(n/2)-2].type):
                 h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
                 h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
-#                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r2[int(n/2)-2].no)-1])
-#                h += int(preference_matrix[int(r2[int(n/2)-2].no)-1][int(r2[int(n/2)-1].no)-1])
-#                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
-#                h += int(preference_matrix[int(r1[int(n/2)-1].no)-2][int(r1[int(n/2)-1].no)-1])
             elif item.seat == 1 and (r1[0].type == r1[1].type or r1[0].type == r2[0].type or r2[0].type == r2[1].type):
-#                h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
-#                h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
                 h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
                 h += int(preference_matrix[int(r2[0].no)-1][int(r1[0].no)-1])
-#                h += int(preference_matrix[int(r2[0].no)-1][int(r2[1].no)-1])
-#                h += int(preference_matrix[int(r2[1].no)-1][int(r2[0].no)-1])
         else:
             if r1[i].type != r1[i+1].type:
                 sc += 1
@@ -588,8 +579,6 @@ def score(ps):
                 h += int(preference_matrix[int(r1[int(i+1)].no)-1][int(r1[i].no)-1])
             if r1[i-1].type != r1[i].type:
                 sc += 1
-#                h += int(preference_matrix[int(r1[i-1].no)-1][int(r1[int(i)].no)-1])
-#                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
             if r1[i].type != r2[i].type:
                 sc += 2
                 h += int(preference_matrix[int(r1[i].no)-1][int(r2[int(i)].no)-1])
@@ -600,17 +589,7 @@ def score(ps):
                 h += int(preference_matrix[int(r2[int(i+1)].no)-1][int(r2[i].no)-1])
             if r2[i-1].type != r2[i].type:
                 sc += 1
-#                h += int(preference_matrix[int(r2[i-1].no)-1][int(r2[int(i)].no)-1])
-#                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
             if r1[i].type == r1[i+1].type or r1[i].type == r2[i].type or r1[i].type == r1[i-1].type or r2[i].type == r2[i+1].type or r2[i].type == r2[i-1].type:
-#                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
-#                h += int(preference_matrix[int(r2[int(i)-1].no)-1][int(r2[i].no)-1])
-#                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
-#                h += int(preference_matrix[int(r1[int(i)-1].no)-1][int(r1[i].no)-1])
-#                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i+1].no)-1])
-#                h += int(preference_matrix[int(r2[int(i)+1].no)-1][int(r2[i].no)-1])
-#                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i+1].no)-1])
-#                h += int(preference_matrix[int(r1[int(i)+1].no)-1][int(r1[i].no)-1])
                 h += int(preference_matrix[int(r1[int(i)].no)-1][int(r2[i].no)-1])
                 h += int(preference_matrix[int(r2[int(i)].no)-1][int(r1[i].no)-1])
     sc += h
@@ -643,17 +622,13 @@ for x in range(1,n+1):
             for y in range(1,n+1):
                 run_search((x,y1), (z,y))
                 m = score(ps)
+                print(m)
                 if m > ma:
                     ma = m
-#                if ma == 153:
-#                    print_person_number_and_seat_number(ps)
-#                    print(ma)
-#                    exit(0)
+                print_person_number_and_seat_number(ps)
                 clear_memory()
-    print(ma)
-#                print()
-#                t2 = time.time() - t1
-#                if t2 > 60:
-#                    print("duration: {}".format(t2))
-#                    exit(0)
-print(ma)
+                print()
+                t2 = time.time() - t1
+                if t2 > sec:
+                    print("max score: {}; duration: {}".format(ma, t2))
+                    exit(0)
