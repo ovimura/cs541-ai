@@ -66,7 +66,7 @@ class Person:
         return self.type
 
 if len(sys.argv) != 3:
-    print("usage: python3 hw1.py <running_time_in_seconds> <url_of_the_dataset>")
+    print("usage: python3 hw1_1.py <running_time_in_seconds> <url_of_the_dataset>")
     exit(-1)
 
 sec = int(sys.argv[1])
