@@ -93,7 +93,7 @@ Output score values for the three datasets are as following:
 
 n = 10, instance 1, optimal score is 104
 n = 30, instance 2, optimal score ~500s (231 during 2 hour execution)
-n = 30, instance 3, optimal score 
+n = 30, instance 3, optimal score -6 (60 seconds execution time)
 
 The results are taken from the program running execution of 60 seconds.
 
