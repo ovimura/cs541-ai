@@ -107,6 +107,11 @@ class Table:
         It is an informed search algorithm which starts at a specific start node and
         parses the graph to the target node having the largest cost path. It maintains a tree of
         paths originating at the start node and terminates at the target.
+        Time complexity in worst case in performance is O(|E|) = O(b^d), where E is the number of edges,
+        b is the branching factor (the avg number of successors per state) and d is the depth of the solution
+        (in this case is the most expensive path)
+        Time complexity in worst case in space is O(|V|) = O(b^d), where V is the number of vertexes, b - branching
+        factor, and d - depth of solution
         frontier - a set of nodes visited but who's neighbors haven't been inspected
         closed_list - a set of nodes visited and who's neighbors have been inspected
         :param s: the start node to start the A* searching
@@ -116,16 +121,20 @@ class Table:
         frontier = set([s])
         closed_list = set([])
         self.g[s] = 0
+        # all nodes' adjacency map
         paths = {}
         paths[s] = s
 
         while len(frontier) > 0:
             n = None
+            # find a node with the highest value of evaluation function f() = g(v) + h(v,n)
             for v in frontier:
                 if n == None or self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v):
                     n = v
             if n == None:
                 return None, None
+            # if the current node is the target, then start
+            # the construction of the final optimal path
             if n == t:
                 the_path = []
                 while paths[n] != n:
@@ -134,11 +143,17 @@ class Table:
                 the_path.append(s)
                 the_path.reverse()
                 return the_path, self.adjacent_nodes
+            # for all the adjacent nodes
             for (m, w) in self.get_adjacent_nodes(n):
+                # if the current node isn't in both frontier and closed_list
+                # then add it to the frontier and add n as it's parent
                 if m not in frontier and m not in closed_list:
                     frontier.add(m)
                     paths[m] = n
                     self.g[m] = self.g[n] + w
+                # else, check if there is higher value path by visiting n first,
+                # then m and if it is update the parent and g data
+                # also, if the node is in the closed_list, moved it to the frontier
                 else:
                     if self.g[m] > self.g[n] + w:
                         self.g[m] = self.g[n] + w
@@ -146,6 +161,8 @@ class Table:
                         if m in closed_list:
                             closed_list.remove(m)
                             frontier.add(m)
+            # remove n from the frontier, and add it to the closed_list,
+            # all adjacent nodes were inspected
             frontier.remove(n)
             closed_list.add(n)
         return None, None
