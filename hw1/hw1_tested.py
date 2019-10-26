@@ -552,21 +552,39 @@ def score(ps):
     for i, item in enumerate(r1):
         if item.seat == 1 or item.seat == n/2:
             if item.seat == 1 and r1[0].type != r1[1].type:
-                sc += 2
-            h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
-            h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
+                sc += 1
+                h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
+                h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
             if item.seat == 1 and r1[0].type != r2[0].type:
-                sc += 4
-            h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
-            h += int(preference_matrix[int(r2[1].no)-1][int(r1[0].no)-1])
-            if item.seat == n/2 and r1[int(n/2)-1].type != r1[int(n/2)-2].type:
                 sc += 2
-            h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
-            h += int(preference_matrix[int(r1[int(n/2)-2].no)-1][int(r1[int(n/2)-1].no)-1])
+                h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
+                h += int(preference_matrix[int(r2[1].no)-1][int(r1[0].no)-1])
+            if item.seat == n/2 and r1[int(n/2)-1].type != r1[int(n/2)-2].type:
+                sc += 1
+                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
+                h += int(preference_matrix[int(r1[int(n/2)-2].no)-1][int(r1[int(n/2)-1].no)-1])
             if item.seat == n/2 and r1[int(n/2)-1].type != r2[int(n/2)-1].type:
-                sc += 4
-            h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
-            h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+                sc += 2
+                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
+                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+            if item.seat == n/2 and r2[int(n/2)-1].type != r2[int(n/2)-2].type:
+                sc += 2
+                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r2[int(n/2)-2].no)-1])
+                h += int(preference_matrix[int(r2[int(n/2)-2].no)-1][int(r2[int(n/2)-1].no)-1])
+            if item.seat == n/2 and (r1[int(n/2)-1].type == r1[int(n/2)-2].type or r1[int(n/2)-1].type == r2[int(n/2)-1].type or r2[int(n/2)-1].type == r2[int(n/2)-2].type):
+                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
+                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+#                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r2[int(n/2)-2].no)-1])
+#                h += int(preference_matrix[int(r2[int(n/2)-2].no)-1][int(r2[int(n/2)-1].no)-1])
+#                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
+#                h += int(preference_matrix[int(r1[int(n/2)-1].no)-2][int(r1[int(n/2)-1].no)-1])
+            elif item.seat == 1 and (r1[0].type == r1[1].type or r1[0].type == r2[0].type or r2[0].type == r2[1].type):
+#                h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
+#                h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
+                h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
+                h += int(preference_matrix[int(r2[0].no)-1][int(r1[0].no)-1])
+#                h += int(preference_matrix[int(r2[0].no)-1][int(r2[1].no)-1])
+#                h += int(preference_matrix[int(r2[1].no)-1][int(r2[0].no)-1])
         else:
             if r1[i].type != r1[i+1].type:
                 sc += 1
@@ -574,10 +592,10 @@ def score(ps):
                 h += int(preference_matrix[int(r1[int(i+1)].no)-1][int(r1[i].no)-1])
             if r1[i-1].type != r1[i].type:
                 sc += 1
-                h += int(preference_matrix[int(r1[i-1].no)-1][int(r1[int(i)].no)-1])
-                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
+#                h += int(preference_matrix[int(r1[i-1].no)-1][int(r1[int(i)].no)-1])
+#                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
             if r1[i].type != r2[i].type:
-                sc += 4
+                sc += 2
                 h += int(preference_matrix[int(r1[i].no)-1][int(r2[int(i)].no)-1])
                 h += int(preference_matrix[int(r2[int(i)].no)-1][int(r1[i].no)-1])
             if r2[i].type != r2[i+1].type:
@@ -586,8 +604,19 @@ def score(ps):
                 h += int(preference_matrix[int(r2[int(i+1)].no)-1][int(r2[i].no)-1])
             if r2[i-1].type != r2[i].type:
                 sc += 1
-                h += int(preference_matrix[int(r2[i-1].no)-1][int(r2[int(i)].no)-1])
-                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
+#                h += int(preference_matrix[int(r2[i-1].no)-1][int(r2[int(i)].no)-1])
+#                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
+            if r1[i].type == r1[i+1].type or r1[i].type == r2[i].type or r1[i].type == r1[i-1].type or r2[i].type == r2[i+1].type or r2[i].type == r2[i-1].type:
+#                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
+#                h += int(preference_matrix[int(r2[int(i)-1].no)-1][int(r2[i].no)-1])
+#                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
+#                h += int(preference_matrix[int(r1[int(i)-1].no)-1][int(r1[i].no)-1])
+#                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i+1].no)-1])
+#                h += int(preference_matrix[int(r2[int(i)+1].no)-1][int(r2[i].no)-1])
+#                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i+1].no)-1])
+#                h += int(preference_matrix[int(r1[int(i)+1].no)-1][int(r1[i].no)-1])
+                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r2[i].no)-1])
+                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r1[i].no)-1])
     sc += h
     return sc
 
@@ -620,7 +649,10 @@ for x in range(1,n+1):
                 m = score(ps)
                 if m > ma:
                     ma = m
-#                print_person_number_and_seat_number(ps)
+#                if ma == 153:
+#                    print_person_number_and_seat_number(ps)
+#                    print(ma)
+#                    exit(0)
                 clear_memory()
 #                print()
 #                t2 = time.time() - t1
