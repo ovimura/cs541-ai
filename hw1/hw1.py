@@ -65,8 +65,8 @@ class Person:
         '''
         return self.type
 
-if len(sys.argv) != 2:
-    print("usage: python3 hw1.py <running_time_in_seconds> <url_of_the_dataset>")
+if len(sys.argv) != 3:
+    print("usage: python3 hw1_1.py <running_time_in_seconds> <url_of_the_dataset>")
     exit(-1)
 
 #sec = int(sys.argv[1])
@@ -632,7 +632,7 @@ def clear_memory():
     ps.clear()
 
 t1 = time.time()
-ma = 0
+ma = -1000
 for x in range(1,n+1):
     for y1 in range(1,n+1):
         for z in range(1,n+1):

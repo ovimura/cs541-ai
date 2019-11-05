@@ -9,11 +9,11 @@ Assignment 1: Dinner Party
 from collections import defaultdict
 import time
 import sys
+import collections
 
 preference_matrix = []
 adjacent_nodes = {}
 n = 0
-pr = [] # solution of the run
 ps = [] # persons
 
 def process_preference_matrix(data):
@@ -65,12 +65,13 @@ class Person:
         '''
         return self.type
 
-if len(sys.argv) != 2:
-    print("usage: python3 <url_of_the_dataset>")
+if len(sys.argv) != 3:
+    print("usage: python3 hw1_1.py <running_time_in_seconds> <url_of_the_dataset>")
     exit(-1)
 
-# read_dataset("data/hw1-inst3.txt")
-read_dataset(sys.argv[1])
+sec = int(sys.argv[1])
+
+read_dataset(sys.argv[2])
 
 class Table:
     def __init__(self, adjacent_nodes):
@@ -106,6 +107,11 @@ class Table:
         It is an informed search algorithm which starts at a specific start node and
         parses the graph to the target node having the largest cost path. It maintains a tree of
         paths originating at the start node and terminates at the target.
+        Time complexity in worst case in performance is O(|E|) = O(b^d), where E is the number of edges,
+        b is the branching factor (the avg number of successors per state) and d is the depth of the solution
+        (in this case is the most expensive path)
+        Time complexity in worst case in space is O(|V|) = O(b^d), where V is the number of vertexes, b - branching
+        factor, and d - depth of solution
         frontier - a set of nodes visited but who's neighbors haven't been inspected
         closed_list - a set of nodes visited and who's neighbors have been inspected
         :param s: the start node to start the A* searching
@@ -115,16 +121,20 @@ class Table:
         frontier = set([s])
         closed_list = set([])
         self.g[s] = 0
+        # all nodes' adjacency map
         paths = {}
         paths[s] = s
 
         while len(frontier) > 0:
             n = None
+            # find a node with the highest value of evaluation function f() = g(v) + h(v,n)
             for v in frontier:
                 if n == None or self.g[v] + self.h(v,n) > self.g[n] + self.h(n,v):
                     n = v
             if n == None:
                 return None, None
+            # if the current node is the target, then start
+            # the construction of the final optimal path
             if n == t:
                 the_path = []
                 while paths[n] != n:
@@ -133,11 +143,17 @@ class Table:
                 the_path.append(s)
                 the_path.reverse()
                 return the_path, self.adjacent_nodes
+            # for all the adjacent nodes
             for (m, w) in self.get_adjacent_nodes(n):
+                # if the current node isn't in both frontier and closed_list
+                # then add it to the frontier and add n as it's parent
                 if m not in frontier and m not in closed_list:
                     frontier.add(m)
                     paths[m] = n
                     self.g[m] = self.g[n] + w
+                # else, check if there is higher value path by visiting n first,
+                # then m and if it is update the parent and g data
+                # also, if the node is in the closed_list, moved it to the frontier
                 else:
                     if self.g[m] > self.g[n] + w:
                         self.g[m] = self.g[n] + w
@@ -145,6 +161,8 @@ class Table:
                         if m in closed_list:
                             closed_list.remove(m)
                             frontier.add(m)
+            # remove n from the frontier, and add it to the closed_list,
+            # all adjacent nodes were inspected
             frontier.remove(n)
             closed_list.add(n)
         return None, None
@@ -488,41 +506,44 @@ def run_search(s,t):
         build_adj_list_n_30()
     tbl = Table(adjacent_nodes)
     p, a = tbl.astar(s,t)
+
+    alln = [x for x in range(1, n+1)]
     keys = [x for x in a.keys()]
-    pr = p
-    alln = range(1,n+1)
-    if len(pr) != n:
-        x1 = [x[0] for x in pr]
-        y1 = [x[1] for x in pr]
-        try:
-            D1 = defaultdict(list)
-            for i, item in enumerate(y1):
-                D1[item].append(i)
-            D1 = {k:v for k,v in D1.items() if len(v)>1}
-            if len(D1.keys()) > 0:
-                for d in D1.keys():
-                    del pr[D1[d][0]]
-            D2 = defaultdict(list)
-            for i, item in enumerate(x1):
-                D2[item].append(i)
-            D2 = {k:v for k,v in D2.items() if len(v)>1}
-            if len(D2.keys()) > 0:
-                for d in D2.keys():
-                    del pr[D2[d][0]]
-        except:
-            pass
-        # adding the vertices not included into A* search to fill the table's seats
-        x = [x for x in alln if x not in [y[0] for y in pr]]
-        y = [y for y in alln if y not in [y[1] for y in pr]]
-        while(len(x) != 0 and len(y) != 0):
-            for k in keys:
-                if k[0] in x and k[1] in y:
-                    x.remove(k[0])
-                    y.remove(k[1])
-                    pr.append(k)
-    for node in pr:
+
+    # remove the duplicate seats or persons from the A* found path
+    p1 = [x[0] for x in p]
+    p2 = [x[1] for x in p]
+
+    dd=[item for item, count in collections.Counter(p1).items() if count > 1]
+    while(len(dd) != 0):
+        for d in p:
+            if d[0] == dd[0]:
+                p.remove(d)
+        p1 = [x[0] for x in p]
+        dd = [item for item, count in collections.Counter(p1).items() if count > 1]
+
+    ee=[item for item, count in collections.Counter(p2).items() if count > 1]
+    while(len(ee) != 0):
+        for e in p:
+            if e[1] == ee[0]:
+                p.remove(e)
+        p2 = [x[1] for x in p]
+        ee = [item for item, count in collections.Counter(p2).items() if count > 1]
+
+    # adding vertices not included into A*
+    x = [xx for xx in alln if xx not in [xxx[0] for xxx in p]]
+    x1 = [xx1 for xx1 in alln if xx1 not in [xxx[1] for xxx in p]]
+
+    while(len(x) != 0 and len(x1) != 0):
+        for k in keys:
+            if k[0] in x and k[1] in x1 and k not in p:
+                x.remove(k[0])
+                x1.remove(k[1])
+                p.append(k)
+
+    for node in p:
         ps.append(Person(node[0], node[1], 0 if int(node[1]) <= int(n/2) else 1, 0, 0))
-    return pr
+    return p
 
 def score(ps):
     '''
@@ -539,24 +560,35 @@ def score(ps):
     h = 0
     r1 = sorted([x for x in ps if x.seat < n/2+1], key=lambda x:x.seat)
     r2 = sorted([x for x in ps if x.seat > n/2], key=lambda x:x.seat)
+
     for i, item in enumerate(r1):
         if item.seat == 1 or item.seat == n/2:
             if item.seat == 1 and r1[0].type != r1[1].type:
-                sc += 2
-            h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
-            h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
+                sc += 1
+                h += int(preference_matrix[int(r1[0].no)-1][int(r1[1].no)-1])
+                h += int(preference_matrix[int(r1[1].no)-1][int(r1[0].no)-1])
             if item.seat == 1 and r1[0].type != r2[0].type:
-                sc += 4
-            h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
-            h += int(preference_matrix[int(r2[1].no)-1][int(r1[0].no)-1])
-            if item.seat == n/2 and r1[int(n/2)-1].type != r1[int(n/2)-2].type:
                 sc += 2
-            h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
-            h += int(preference_matrix[int(r1[int(n/2)-2].no)-1][int(r1[int(n/2)-1].no)-1])
+                h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
+                h += int(preference_matrix[int(r2[1].no)-1][int(r1[0].no)-1])
+            if item.seat == n/2 and r1[int(n/2)-1].type != r1[int(n/2)-2].type:
+                sc += 1
+                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r1[int(n/2)-2].no)-1])
+                h += int(preference_matrix[int(r1[int(n/2)-2].no)-1][int(r1[int(n/2)-1].no)-1])
             if item.seat == n/2 and r1[int(n/2)-1].type != r2[int(n/2)-1].type:
-                sc += 4
-            h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
-            h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+                sc += 2
+                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
+                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+            if item.seat == n/2 and r2[int(n/2)-1].type != r2[int(n/2)-2].type:
+                sc += 2
+                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r2[int(n/2)-2].no)-1])
+                h += int(preference_matrix[int(r2[int(n/2)-2].no)-1][int(r2[int(n/2)-1].no)-1])
+            if item.seat == n/2 and (r1[int(n/2)-1].type == r1[int(n/2)-2].type or r1[int(n/2)-1].type == r2[int(n/2)-1].type or r2[int(n/2)-1].type == r2[int(n/2)-2].type):
+                h += int(preference_matrix[int(r1[int(n/2)-1].no)-1][int(r2[int(n/2)-1].no)-1])
+                h += int(preference_matrix[int(r2[int(n/2)-1].no)-1][int(r1[int(n/2)-1].no)-1])
+            elif item.seat == 1 and (r1[0].type == r1[1].type or r1[0].type == r2[0].type or r2[0].type == r2[1].type):
+                h += int(preference_matrix[int(r1[0].no)-1][int(r2[0].no)-1])
+                h += int(preference_matrix[int(r2[0].no)-1][int(r1[0].no)-1])
         else:
             if r1[i].type != r1[i+1].type:
                 sc += 1
@@ -564,10 +596,8 @@ def score(ps):
                 h += int(preference_matrix[int(r1[int(i+1)].no)-1][int(r1[i].no)-1])
             if r1[i-1].type != r1[i].type:
                 sc += 1
-                h += int(preference_matrix[int(r1[i-1].no)-1][int(r1[int(i)].no)-1])
-                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r1[i-1].no)-1])
             if r1[i].type != r2[i].type:
-                sc += 4
+                sc += 2
                 h += int(preference_matrix[int(r1[i].no)-1][int(r2[int(i)].no)-1])
                 h += int(preference_matrix[int(r2[int(i)].no)-1][int(r1[i].no)-1])
             if r2[i].type != r2[i+1].type:
@@ -576,8 +606,9 @@ def score(ps):
                 h += int(preference_matrix[int(r2[int(i+1)].no)-1][int(r2[i].no)-1])
             if r2[i-1].type != r2[i].type:
                 sc += 1
-                h += int(preference_matrix[int(r2[i-1].no)-1][int(r2[int(i)].no)-1])
-                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r2[i-1].no)-1])
+            if r1[i].type == r1[i+1].type or r1[i].type == r2[i].type or r1[i].type == r1[i-1].type or r2[i].type == r2[i+1].type or r2[i].type == r2[i-1].type:
+                h += int(preference_matrix[int(r1[int(i)].no)-1][int(r2[i].no)-1])
+                h += int(preference_matrix[int(r2[int(i)].no)-1][int(r1[i].no)-1])
     sc += h
     return sc
 
@@ -596,27 +627,25 @@ def clear_memory():
     :return: None
     '''
     global adjacent_nodes
-    global pr
     global ps
     adjacent_nodes.clear()
-    pr.clear()
     ps.clear()
 
-# Perform complete search in all possible combinations of seats and persons,
-# The program execution terminates after 60 seconds
 t1 = time.time()
-
+ma = -1000
 for x in range(1,n+1):
     for y1 in range(1,n+1):
         for z in range(1,n+1):
             for y in range(1,n+1):
                 run_search((x,y1), (z,y))
-                print(score(ps))
+                m = score(ps)
+                print(m)
+                if m > ma:
+                    ma = m
                 print_person_number_and_seat_number(ps)
                 clear_memory()
                 print()
                 t2 = time.time() - t1
-                if t2 > 60:
-                    print("duration: {}".format(t2))
+                if t2 > sec:
+                    print("max score: {}; duration: {}".format(ma, t2))
                     exit(0)
-
