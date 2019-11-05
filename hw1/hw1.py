@@ -65,13 +65,13 @@ class Person:
         '''
         return self.type
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 2:
     print("usage: python3 hw1.py <running_time_in_seconds> <url_of_the_dataset>")
     exit(-1)
 
-sec = int(sys.argv[1])
+#sec = int(sys.argv[1])
 
-read_dataset(sys.argv[2])
+read_dataset(sys.argv[1])
 
 class Table:
     def __init__(self, adjacent_nodes):
@@ -639,13 +639,14 @@ for x in range(1,n+1):
             for y in range(1,n+1):
                 run_search((x,y1), (z,y))
                 m = score(ps)
-                print(m)
+                #print(m)
                 if m > ma:
                     ma = m
-                print_person_number_and_seat_number(ps)
+                #print_person_number_and_seat_number(ps)
                 clear_memory()
-                print()
-                t2 = time.time() - t1
-                if t2 > sec:
-                    print("max score: {}; duration: {}".format(ma, t2))
-                    exit(0)
+                #print()
+                #t2 = time.time() - t1
+                #if t2 > sec:
+                #    print("max score: {}; duration: {}".format(ma, t2))
+                #    exit(0)
+        print(ma)
