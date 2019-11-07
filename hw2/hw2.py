@@ -1,10 +1,17 @@
 # HW2
 
 
-class NBayes:
+class nbayes:
     def __init__(self):
+        self.train = []
         with open('data/spect-orig.train.csv') as f:
-            self.strain = f.readlines()
+            t = f.readlines()
+            print(len(t))
+            for x in range(len(t)):
+                a = t[x].replace('\n','').split(',')
+                self.train.append(a)
+                print(self.train)
+                exit(3)
         with open('data/spect-orig.test.csv') as f:
             self.stest = f.readlines()
 
@@ -16,8 +23,8 @@ class NBayes:
 
 
 def main():
-    nb = NBayes()
-    print(nb.strain)
+    nb = nbayes()
+    print(nb.train)
     print(nb.stest)
 
 
