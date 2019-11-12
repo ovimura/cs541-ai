@@ -18,27 +18,47 @@ class nbayes:
                 self.stest.append(a)
 
 
-    def c(self,t):
+    def c(self,i):
         '''
         It returns the classifier class based on the probability
-        :param t:
+        :param i:
         :return:
         '''
-        ones = [x for x in t[1:] if int(x) == 1]
-        zeros = [x for x in t[1:] if int(x) == 0]
-        h0 = round(float(len(zeros)/(len(t)-1)),2)
-        h1 = round(float(len(ones)/(len(t)-1)),2)
-        return 1 if h1 > h0 else 0
+        return len([x for x in self.train if int(x[0]) == i])
 
 
-    def f(self, idx, t):
+    def pr_h(self, i):
         '''
-        It returns the feature at given index from instance t
-        :param idx: index of the feature
-        :param t: instance from which to return the feature
-        :return: the feature at the given index from given instance
+        It calculates the probability of the given hypothesis.
+        :param i:
+        :return:
         '''
-        return t[int(1+idx)]
+        return float(self.c(i)/len(self.train))
+
+
+    def pr_f_h(self, j, k, i):
+        '''
+        It calculates the probability of the given feature index which equals given k for given hypothesis i.
+        :param j:
+        :param k:
+        :param i:
+        :return:
+        '''
+        return float((self.c(i) + self.f(j,k))/self.c(i))
+
+
+    def f(self,j,k):
+        '''
+        It counts the number of instances where the feature at index j is equal to the given k
+        :param j:
+        :param k:
+        :return:
+        '''
+        fj = 0
+        for x in self.train:
+            if int(x[j]) == k:
+                fj += 1
+        return fj
 
 
     def learn(self):
@@ -53,10 +73,10 @@ class nbayes:
 
 def main():
     nb = nbayes('data/spect-orig.train.csv', 'data/spect-orig.test.csv')
-    print(nb.c(nb.train[0]))
-    print(nb.stest[0])
-    print(nb.f(2,nb.stest[0]))
-    nb.learn()
+    print(nb.pr_h(0))
+    print(nb.pr_h(1))
+    print(nb.pr_f_h(1,0,1))
+    print(nb.pr_f_h(1,1,1))
 
 
 if __name__ == "__main__":
