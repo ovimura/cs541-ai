@@ -1,8 +1,9 @@
 # HW2
 
-
 class nbayes:
     def __init__(self, url_train, url_test):
+        self.F = []
+        self.N = []
         self.train = []
         self.stest = []
         with open(url_train) as f:
@@ -15,6 +16,7 @@ class nbayes:
             for x in range(len(t)):
                 a = t[x].replace('\n','').split(',')
                 self.stest.append(a)
+
 
     def c(self,t):
         '''
@@ -38,8 +40,15 @@ class nbayes:
         '''
         return t[int(1+idx)]
 
+
     def learn(self):
-        pass
+        self.N = [0,0]
+        fs = [0 for _ in range(len(self.train[0][1:]))]
+        self.F = [fs,fs]
+        print((self.N))
+        print(self.F)
+        print(len(self.F[0]))
+        print(len(self.F[1]))
 
 
 def main():
@@ -47,8 +56,8 @@ def main():
     print(nb.c(nb.train[0]))
     print(nb.stest[0])
     print(nb.f(2,nb.stest[0]))
+    nb.learn()
 
 
 if __name__ == "__main__":
     main()
-
