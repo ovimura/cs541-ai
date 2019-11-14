@@ -1,91 +1,82 @@
-# https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
+# CS541: HW2
+# Student: Ovidiu Mura
+# Date: Nov 14, 2019
 
-import numpy as np
 import math
-import csv
-import operator
-from sklearn.metrics import confusion_matrix, classification_report
-#open training data set
-file1 = open('data/spect-orig.train.csv','r')
-data1 = csv.reader(file1)
-train_data = np.array(list(data1)).astype(np.int)
-#open test data set
-file2 = open('data/spect-orig.test.csv','r')
-data2 = csv.reader(file2)
-test_data = np.array(list(data2)).astype(np.int)
 
-def euclideanDistance(instance1,instance2,length):
-    distance =0
-    new1 = []
-    new2 = []
-    for j in range(1,len(instance1)):
-        new1.append(instance1[j])
-        new2.append(instance2[j])
-    for x in range(length):
-        distance +=pow((new1[x]-new2[x]),2)
-    return math.sqrt(distance)
+class knn(object):
+    '''
+    This class implements the k-Nearest-Neighbor learner.
+    '''
+    def __init__(self, url_train='data/spect-orig.train.csv', url_test='data/spect-orig.test.csv', k=5):
+        '''
+        The constructor of the knn instance.
+        :param url_train:
+        :param url_test:
+        :param k:
+        '''
+        self.train = []
+        self.test = []
+        self.k = k
+        with open(url_train) as f:
+            t = f.readlines()
+            for x in range(len(t)):
+                a = t[x].replace('\n','').split(',')
+                self.train.append(a)
+        with open(url_test) as f:
+            t = f.readlines()
+            for x in range(len(t)):
+                a = t[x].replace('\n','').split(',')
+                self.test.append(a)
 
-def getKNeighbors(trainingSet, testInstance, k):
-    distances = []
-    length = len(testInstance)-1
-    for x in range(len(trainingSet)):
-        dist = euclideanDistance(trainingSet[x], testInstance, length)
-        distances.append((trainingSet[x], dist))
-    distances.sort(key=lambda tup: tup[1])
-    #print(distances)
-    #print(distances[0][1])
-    neighbors = []
-    for x in range(k):
-        neighbors.append(distances[x][0])
-    return neighbors
+    def euclidean_distance(self, v1,v2):
+        '''
+        It calculates the Euclidean Distance for two given vectors.
+        :param v1:
+        :param v2:
+        :return:
+        '''
+        d = 0.0
+        u1 = []
+        u2 = []
+        for j in range(1,len(v1)):
+            u1.append(v1[j])
+            u2.append(v2[j])
+        for x in range(len(v2)-1):
+            d +=pow((float(u1[x])-float(u2[x])),2)
+        return math.sqrt(d)
 
-def predictClass(train, t, num_neighbors):
-    #print(t)
-    neighbors = getKNeighbors(train, t, num_neighbors)
-    #print(neighbors)
-    output_values = [row[0] for row in neighbors]
-    prediction = max(set(output_values), key=output_values.count)
-    return prediction
+    def get_k_nearest_neighbors(self, train, t):
+        ds = []
+        ns = []
+        for x in range(len(train)):
+            d = self.euclidean_distance(train[x], t)
+            ds.append((train[x], d))
+        ds.sort(key=lambda tup: tup[1])
+        for x in range(self.k):
+            ns.append(ds[x][0])
+        return ns
 
-new_list = []
-pred_list = []
-actual_list = []
+    def predict(self, train, t):
+        ns = self.get_k_nearest_neighbors(train, t)
+        output_values = [row[0] for row in ns]
+        return max(set(output_values), key=output_values.count)
 
-k = 5
-print(len(test_data))
+    def run(self):
+        predicted = []
+        actuals = []
+        for i in range(len(self.test)):
+            predicted.append(self.predict(self.train,self.test[i]))
+            actuals.append(self.test[i][0])
+        ones = 0
+        zeros = 0
+        for x in range(len(predicted)):
+            if int(predicted[x]) == int(actuals[x]) and int(predicted[x]) == 1:
+                ones += 1
+            if int(predicted[x]) == int(actuals[x]) and int(predicted[x]) == 0:
+                zeros += 1
+        print("orig {}/{}({})  {}/{}({})  {}/{}({})".format(ones+zeros, len(self.test), round(float((ones+zeros)/len(self.test)),2), zeros,
+                                                        len([x for x in actuals if int(x) == 0]), round(float(zeros/len([x for x in actuals if int(x) == 0])),2),
+                                                        ones, len([x for x in actuals if int(x) == 1]), round(float(ones/len([x for x in actuals if int(x) == 1])),2)))
 
-for i in range(test_data.shape[0]):
-    pred_list.append(predictClass(train_data,test_data[i],k))
-    actual_list.append(test_data[i][0])
-
-
-print(test_data[0][0])
-print(pred_list)
-print(actual_list)
-
-ones = 0
-zeros = 0
-for x in range(len(pred_list)):
-    if pred_list[x] == actual_list[x] and pred_list[x] == 1:
-        ones += 1
-    if pred_list[x] == actual_list[x] and pred_list[x] == 0:
-        zeros += 1
-
-
-
-
-
-print(ones)
-print(zeros)
-print("orig {}/{}({})".format(ones+zeros, len(test_data), round(float((ones+zeros)/len(test_data)),2)))
-
-
-# Calculate accuracy percentage
-def accuracy_metric(actual, predicted):
-    correct = 0
-    for i in range(len(actual)):
-        if actual[i] == predicted[i]:
-            correct += 1
-    return correct / float(len(actual)) * 100.0
-
-print(accuracy_metric(actual_list,pred_list))
+knn().run()

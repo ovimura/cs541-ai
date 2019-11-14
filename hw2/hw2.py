@@ -1,9 +1,20 @@
-# HW2
+# CS541: HW2
+# Student: Ovidiu Mura
+# Date: Nov 14, 2019
 
 import math
 
-class nbayes:
+class nbayes(object):
+    '''
+    This class is an implementation of the Naive Bayesian reasoning.
+    '''
     def __init__(self, url_train, url_test):
+        '''
+        The constructor of this instance. Initializes the F, N arrays and
+        loads the training/testing datasets.
+        :param url_train: url of the training dataset file
+        :param url_test: url of the testing dataset file
+        '''
         self.F = []
         self.N = []
         self.train = []
@@ -19,46 +30,13 @@ class nbayes:
                 a = t[x].replace('\n','').split(',')
                 self.test.append(a)
 
-    def c(self,i):
-        '''
-        It returns the classifier class based on the probability
-        :param i:
-        :return:
-        '''
-        return len([x for x in self.train if int(x[0]) == i])
-
-    def pr_h(self, i):
-        '''
-        It calculates the probability of the given hypothesis.
-        :param i:
-        :return:
-        '''
-        return float(self.c(i)/len(self.train))
-
-    def pr_f_h(self, j, k, i):
-        '''
-        It calculates the probability of the given feature index which equals given k for given hypothesis i.
-        :param j:
-        :param k:
-        :param i:
-        :return:
-        '''
-        return float((self.c(i) + self.f(j,k))/self.c(i))
-
-    def f(self,j,k):
-        '''
-        It counts the number of instances where the feature at index j is equal to the given k
-        :param j:
-        :param k:
-        :return:
-        '''
-        fj = 0
-        for x in self.train:
-            if int(x[j]) == k:
-                fj += 1
-        return fj
-
     def learn(self):
+        '''
+        It learns the data by counting the positive features in a 2-D array F,
+        and counting the instance classification in array N, for a given feature and
+        instance respectively.
+        :return: a tuple with the 2-D array feature counts, and 1-D array instance counts
+        '''
         self.N = [0,0]
         fs1 = [0 for _ in range(1,len(self.train[0][0:]))]
         fs2 = [0 for _ in range(1,len(self.train[0][0:]))]
@@ -71,6 +49,11 @@ class nbayes:
         return (self.N, self.F)
 
     def L(self, c):
+        '''
+        It applies Naive Bayesian reasoning for a new give instance.
+        :param c: new instance to be classified
+        :return: likelihood that the instance is Class-0 or Class-1
+        '''
         L = [0,0]
         for i in [0,1]:
             L[i] = math.log(self.N[i] + 0.5) - math.log(self.N[0] + self.N[1] + 0.5)
@@ -82,12 +65,17 @@ class nbayes:
         return L
 
     def classify(self, c):
+        '''
+        It classifies a new given instance.
+        :param c: new instance
+        :return: the predicted class
+        '''
         L = self.L(c)
         if L[1] > L[0]:
             return 1
         return 0
 
-def main():
+def spect_orig():
     nb = nbayes('data/spect-orig.train.csv', 'data/spect-orig.test.csv')
     a, b = nb.learn()
     predicted_list = []
@@ -106,7 +94,131 @@ def main():
             one_pred_true += 1
         if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
             zeros_pred_true += 1
-    print("orig {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2)))
+    print("orig {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
+                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
+                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
+
+def spect_itg():
+    nb = nbayes('data/spect-itg.train.csv', 'data/spect-itg.test.csv')
+    a, b = nb.learn()
+    predicted_list = []
+    actual_list = []
+    one_pred_true = 0
+    zeros_pred_true = 0
+    for i in range(len(nb.test)):
+        d = nb.classify(nb.test[i])
+        actual_list.append(int(nb.test[i][0]))
+        if d == 1:
+            predicted_list.append(1)
+        else:
+            predicted_list.append(0)
+    for x in range(len(predicted_list)):
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 1:
+            one_pred_true += 1
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
+            zeros_pred_true += 1
+    print("itg {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
+                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
+                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
+
+def spect_resplit():
+    nb = nbayes('data/spect-resplit.train.csv', 'data/spect-resplit.test.csv')
+    a, b = nb.learn()
+    predicted_list = []
+    actual_list = []
+    one_pred_true = 0
+    zeros_pred_true = 0
+    for i in range(len(nb.test)):
+        d = nb.classify(nb.test[i])
+        actual_list.append(int(nb.test[i][0]))
+        if d == 1:
+            predicted_list.append(1)
+        else:
+            predicted_list.append(0)
+    for x in range(len(predicted_list)):
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 1:
+            one_pred_true += 1
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
+            zeros_pred_true += 1
+    print("resplit {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
+                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
+                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
+
+def spect_resplit_itg():
+    nb = nbayes('data/spect-resplit-itg.train.csv', 'data/spect-resplit-itg.test.csv')
+    a, b = nb.learn()
+    predicted_list = []
+    actual_list = []
+    one_pred_true = 0
+    zeros_pred_true = 0
+    for i in range(len(nb.test)):
+        d = nb.classify(nb.test[i])
+        actual_list.append(int(nb.test[i][0]))
+        if d == 1:
+            predicted_list.append(1)
+        else:
+            predicted_list.append(0)
+    for x in range(len(predicted_list)):
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 1:
+            one_pred_true += 1
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
+            zeros_pred_true += 1
+    print("resplit-itg {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
+                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
+                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
+
+def spect():
+    nb = nbayes('data/SPECT.train', 'data/SPECT.test')
+    a, b = nb.learn()
+    predicted_list = []
+    actual_list = []
+    one_pred_true = 0
+    zeros_pred_true = 0
+    for i in range(len(nb.test)):
+        d = nb.classify(nb.test[i])
+        actual_list.append(int(nb.test[i][0]))
+        if d == 1:
+            predicted_list.append(1)
+        else:
+            predicted_list.append(0)
+    for x in range(len(predicted_list)):
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 1:
+            one_pred_true += 1
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
+            zeros_pred_true += 1
+    print("spect {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
+                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
+                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
+
+def spectf():
+    nb = nbayes('data/SPECTF.train', 'data/SPECTF.test')
+    a, b = nb.learn()
+    predicted_list = []
+    actual_list = []
+    one_pred_true = 0
+    zeros_pred_true = 0
+    for i in range(len(nb.test)):
+        d = nb.classify(nb.test[i])
+        actual_list.append(int(nb.test[i][0]))
+        if d == 1:
+            predicted_list.append(1)
+        else:
+            predicted_list.append(0)
+    for x in range(len(predicted_list)):
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 1:
+            one_pred_true += 1
+        if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
+            zeros_pred_true += 1
+    print("spectf {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
+                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
+                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
+
+def main():
+    spect_orig()
+    spect_itg()
+    spect_resplit()
+    spect_resplit_itg()
+    spect()
 
 if __name__ == "__main__":
     main()
