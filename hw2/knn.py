@@ -8,7 +8,7 @@ class knn(object):
     '''
     This class implements the k-Nearest-Neighbor learner.
     '''
-    def __init__(self, url_train='data/spect-orig.train.csv', url_test='data/spect-orig.test.csv', k=5):
+    def __init__(self, dataset_name='orig', url_train='data/spect-orig.train.csv', url_test='data/spect-orig.test.csv', k=5):
         '''
         The constructor of the knn instance.
         :param url_train:
@@ -18,6 +18,7 @@ class knn(object):
         self.train = []
         self.test = []
         self.k = k
+        self.dataset_name = dataset_name
         with open(url_train) as f:
             t = f.readlines()
             for x in range(len(t)):
@@ -75,8 +76,12 @@ class knn(object):
                 ones += 1
             if int(predicted[x]) == int(actuals[x]) and int(predicted[x]) == 0:
                 zeros += 1
-        print("orig {}/{}({})  {}/{}({})  {}/{}({})".format(ones+zeros, len(self.test), round(float((ones+zeros)/len(self.test)),2), zeros,
+        print(self.dataset_name + " {}/{}({})  {}/{}({})  {}/{}({})".format(ones+zeros, len(self.test), round(float((ones+zeros)/len(self.test)),2), zeros,
                                                         len([x for x in actuals if int(x) == 0]), round(float(zeros/len([x for x in actuals if int(x) == 0])),2),
                                                         ones, len([x for x in actuals if int(x) == 1]), round(float(ones/len([x for x in actuals if int(x) == 1])),2)))
 
-knn().run()
+knn('orig','data/spect-orig.train.csv','data/spect-orig.test.csv',5).run()
+knn('itg','data/spect-itg.train.csv','data/spect-itg.test.csv',5).run()
+knn('resplit','data/spect-resplit.train.csv','data/spect-resplit.test.csv',5).run()
+knn('resplit-itg','data/spect-resplit-itg.train.csv','data/spect-resplit-itg.test.csv',5).run()
+knn('spect','data/spect.train','data/spect.test',5).run()
