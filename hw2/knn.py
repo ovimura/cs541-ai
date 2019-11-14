@@ -1,4 +1,4 @@
-# CS541: HW2
+# CS541: HW2 - Heart Anomalies
 # Student: Ovidiu Mura
 # Date: Nov 14, 2019
 
@@ -48,6 +48,12 @@ class knn(object):
         return math.sqrt(d)
 
     def get_k_nearest_neighbors(self, train, t):
+        '''
+        It gets the k nearest neighbors of a vector from the training set.
+        :param train:
+        :param t:
+        :return:
+        '''
         ds = []
         ns = []
         for x in range(len(train)):
@@ -59,11 +65,23 @@ class knn(object):
         return ns
 
     def predict(self, train, t):
+        '''
+        It predicts the classifiction class for the given instance t.
+        :param train: the train data to be learned
+        :param t: the instance to be predicted
+        :return: the predicted class
+        '''
         ns = self.get_k_nearest_neighbors(train, t)
-        output_values = [row[0] for row in ns]
-        return max(set(output_values), key=output_values.count)
+        ps = [n[0] for n in ns]
+        return max(set(ps), key=ps.count)
 
     def run(self):
+        '''
+        It executes the learner and predict the classes for the test data; then
+        it prints the accuracy of prediction overall, prediction rate for Class-0, and
+        prediction rate for Class-1
+        :return: None
+        '''
         predicted = []
         actuals = []
         for i in range(len(self.test)):

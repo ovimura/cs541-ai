@@ -1,4 +1,4 @@
-# CS541: HW2
+# CS541: HW2 - Heart Anomalies
 # Student: Ovidiu Mura
 # Date: Nov 14, 2019
 
