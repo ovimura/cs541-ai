@@ -63,4 +63,4 @@ Comparing Naive Bayesian (nb) results with k-Nearest-Neighbor (knn) results:
 | `best performance` | `nb` | `nb` | `=` | `=` | `nb` |
 
 
-From table above Naive Bayesian learner perform better than k-Nearest-Neighbor (k=5).
+The results from table above show that Naive Bayesian learner perform better than k-Nearest-Neighbor (k=5).
