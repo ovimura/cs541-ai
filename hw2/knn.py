@@ -11,9 +11,9 @@ class knn(object):
     def __init__(self, dataset_name='orig', url_train='data/spect-orig.train.csv', url_test='data/spect-orig.test.csv', k=5):
         '''
         The constructor of the knn instance.
-        :param url_train:
-        :param url_test:
-        :param k:
+        :param url_train: the url for the train dataset file
+        :param url_test: the url for the tst dataset file
+        :param k: the k-th nearest neighbor
         '''
         self.train = []
         self.test = []
@@ -33,9 +33,9 @@ class knn(object):
     def euclidean_distance(self, v1,v2):
         '''
         It calculates the Euclidean Distance for two given vectors.
-        :param v1:
-        :param v2:
-        :return:
+        :param v1: first vector values
+        :param v2: second vector values
+        :return: the euclidean distance
         '''
         d = 0.0
         u1 = []
@@ -50,9 +50,9 @@ class knn(object):
     def get_k_nearest_neighbors(self, train, t):
         '''
         It gets the k nearest neighbors of a vector from the training set.
-        :param train:
-        :param t:
-        :return:
+        :param train: the train set
+        :param t: the instance for which the k-nearest-neighbor to be calculated.
+        :return: a list of k nearest neighbors of the given instance t
         '''
         ds = []
         ns = []

@@ -76,6 +76,10 @@ class nbayes(object):
         return 0
 
 def spect_orig():
+    '''
+    It learns and predict orig dataset.
+    :return: None
+    '''
     nb = nbayes('data/spect-orig.train.csv', 'data/spect-orig.test.csv')
     a, b = nb.learn()
     predicted_list = []
@@ -99,6 +103,10 @@ def spect_orig():
                                                         one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
 
 def spect_itg():
+    '''
+    It learns and predicts itg dataset.
+    :return: None
+    '''
     nb = nbayes('data/spect-itg.train.csv', 'data/spect-itg.test.csv')
     a, b = nb.learn()
     predicted_list = []
@@ -122,6 +130,10 @@ def spect_itg():
                                                         one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
 
 def spect_resplit():
+    '''
+    It learns and predicts resplit dataset.
+    :return: None
+    '''
     nb = nbayes('data/spect-resplit.train.csv', 'data/spect-resplit.test.csv')
     a, b = nb.learn()
     predicted_list = []
@@ -145,6 +157,10 @@ def spect_resplit():
                                                         one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
 
 def spect_resplit_itg():
+    '''
+    It learns and predicts resplit-itg dataset.
+    :return: None
+    '''
     nb = nbayes('data/spect-resplit-itg.train.csv', 'data/spect-resplit-itg.test.csv')
     a, b = nb.learn()
     predicted_list = []
@@ -168,6 +184,10 @@ def spect_resplit_itg():
                                                         one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
 
 def spect():
+    '''
+    It learns and predicts SPECT dataset.
+    :return: None
+    '''
     nb = nbayes('data/SPECT.train', 'data/SPECT.test')
     a, b = nb.learn()
     predicted_list = []
@@ -190,30 +210,12 @@ def spect():
                                                         len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
                                                         one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
 
-def spectf():
-    nb = nbayes('data/SPECTF.train', 'data/SPECTF.test')
-    a, b = nb.learn()
-    predicted_list = []
-    actual_list = []
-    one_pred_true = 0
-    zeros_pred_true = 0
-    for i in range(len(nb.test)):
-        d = nb.classify(nb.test[i])
-        actual_list.append(int(nb.test[i][0]))
-        if d == 1:
-            predicted_list.append(1)
-        else:
-            predicted_list.append(0)
-    for x in range(len(predicted_list)):
-        if predicted_list[x] == actual_list[x] and predicted_list[x] == 1:
-            one_pred_true += 1
-        if predicted_list[x] == actual_list[x] and predicted_list[x] == 0:
-            zeros_pred_true += 1
-    print("spectf {}/{}({})  {}/{}({})  {}/{}({})".format(one_pred_true+zeros_pred_true, len(nb.test), round(float((one_pred_true+zeros_pred_true)/len(nb.test)),2), zeros_pred_true,
-                                                        len([x for x in actual_list if int(x) == 0]), round(float(zeros_pred_true/len([x for x in actual_list if int(x) == 0])),2),
-                                                        one_pred_true, len([x for x in actual_list if int(x) == 1]), round(float(one_pred_true/len([x for x in actual_list if int(x) == 1])),2)))
 
 def main():
+    '''
+    The program's main method executes the learn/predict datasets functions.
+    :return: None
+    '''
     spect_orig()
     spect_itg()
     spect_resplit()
