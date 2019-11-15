@@ -32,8 +32,10 @@ I built Naive Bayesian and k-Nearest-Neighboar machine learners to diagnose hear
 #### nb - goal will execute the Naive Bayesian, knn - goal will execute the k-Nearest-Neighbor
 ####
 
-Abstract: Both learners are implemented in Python3 programming language. In this application, the accuracy
-on normal instances, `true positive rate`, is more important. The best results are given by the **resplit** dataset for both learners nb and knn.
+`Abstract`: Both learners are implemented in Python3 programming language. In this application, the accuracy
+on normal instances, `true positive rate`, is more important. The best results are given by the **resplit** dataset for both learners nb and knn. I implemented the Naive Bayesian as described in the requirements and the k-Nearest-Neighbor learner I implemented in three steps as described below.
+
+The k-Nearest-Neighbor (knn) implementation of the learner algorithm has three main steps: calculate Euclidean Distance, get k nearest neighbor, and predict the classification class. The knn algorithm uses k = 5 and the results with Naive Bayesian comparisons are presented below.
 
 Comparing Naive Bayesian (nb) results with k-Nearest-Neighbor (knn) results:
 
