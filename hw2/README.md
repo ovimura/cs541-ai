@@ -33,7 +33,7 @@ I built Naive Bayesian and k-Nearest-Neighboar machine learners to diagnose hear
 ####
 
 Abstract: Both learners are implemented in Python3 programming language. In this application, the accuracy
-on normal instances, `true positive rate`, is more important. The best results are given by the resplit dataset for both learners nb and knn.
+on normal instances, `true positive rate`, is more important. The best results are given by the **resplit** dataset for both learners nb and knn.
 
 Comparing Naive Bayesian (nb) results with k-Nearest-Neighbor (knn) results:
 
