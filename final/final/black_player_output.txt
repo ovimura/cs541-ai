@@ -1,0 +1,155 @@
+C:\Users\omura\Documents\courses\CS541\repos\cs541-ai\final\final>python player.py black localhost 0 3
+1. me:b1
+.....
+.....
+.....
+.....
+.b...
+1. opp: b5
+.w...
+.....
+.....
+.....
+.b...
+
+2. me:b4
+.w...
+.b...
+.....
+.....
+.b...
+2. opp: c1
+.w...
+.b...
+.....
+.....
+.bw..
+
+3. me:b3
+.w...
+.b...
+.b...
+.....
+.bw..
+3. opp: e4
+.w...
+.b..w
+.b...
+.....
+.bw..
+
+4. me:e2
+.w...
+.b..w
+.b...
+....b
+.bw..
+4. opp: a2
+.w...
+.b..w
+.b...
+w...b
+.bw..
+
+5. me:e1
+.w...
+.b..w
+.b...
+w...b
+.bw.b
+5. opp: b2
+.w...
+.b..w
+.b...
+ww..b
+.bw.b
+
+6. me:d2
+.w...
+.b..w
+.b...
+ww.bb
+.bw.b
+6. opp: e3
+.w...
+.b..w
+.b..w
+ww.bb
+.bw.b
+
+7. me:c2
+.w...
+.b..w
+.b..w
+wwbbb
+.bw.b
+7. opp: a1
+.w...
+.b..w
+.b..w
+wwbbb
+www.b
+
+8. me:d1
+.w...
+.b..w
+.b..w
+wwbbb
+wwwbb
+8. opp: c5
+.ww..
+.b..w
+.b..w
+wwbbb
+wwwbb
+
+9. me:d4
+.ww..
+.b.bw
+.b..w
+wwbbb
+wwwbb
+9. opp: e5
+.ww.w
+.b.bw
+.b..w
+wwbbb
+wwwbb
+
+10. me:d3
+.ww.w
+.b.bw
+.b.bw
+wwbbb
+wwwbb
+10. opp: d5
+.wwww
+.b.bw
+.b.bw
+wwbbb
+wwwbb
+
+11. me:c4
+.wwww
+.bbbw
+.b.bw
+wwbbb
+wwwbb
+11. opp: a4
+.wwww
+wbbbw
+.b.bw
+wwbbb
+wwwbb
+
+12. me:a3
+.wwww
+wbbbw
+bb.bw
+bbbbb
+bbbbb
+12. opp: pass
+me: pass to end game
+Black Wins.
+
+C:\Users\omura\Documents\courses\CS541\repos\cs541-ai\final\final>

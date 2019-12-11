@@ -1,0 +1,213 @@
+C:\Users\omura\Documents\courses\CS541\final\gothello-grossthello>java Gthd 0
+Black player connected
+White player connected
+
+380 1 b
+382
+.....
+.....
+.....
+.....
+.....
+
+380 1 w
+382
+.....
+.....
+.....
+.....
+.b...
+
+380 2 b
+382
+.w...
+.....
+.....
+.....
+.b...
+
+380 2 w
+382
+.w...
+.b...
+.....
+.....
+.b...
+
+380 3 b
+382
+.w...
+.b...
+.....
+.....
+.bw..
+
+380 3 w
+382
+.w...
+.b...
+.b...
+.....
+.bw..
+
+380 4 b
+382
+.w...
+.b..w
+.b...
+.....
+.bw..
+
+380 4 w
+382
+.w...
+.b..w
+.b...
+....b
+.bw..
+
+380 5 b
+382
+.w...
+.b..w
+.b...
+w...b
+.bw..
+
+380 5 w
+382
+.w...
+.b..w
+.b...
+w...b
+.bw.b
+
+380 6 b
+382
+.w...
+.b..w
+.b...
+ww..b
+.bw.b
+
+380 6 w
+382
+.w...
+.b..w
+.b...
+ww.bb
+.bw.b
+
+380 7 b
+382
+.w...
+.b..w
+.b..w
+ww.bb
+.bw.b
+
+380 7 w
+382
+.w...
+.b..w
+.b..w
+wwbbb
+.bw.b
+
+380 8 b
+382
+.w...
+.b..w
+.b..w
+wwbbb
+www.b
+
+380 8 w
+382
+.w...
+.b..w
+.b..w
+wwbbb
+wwwbb
+
+380 9 b
+382
+.ww..
+.b..w
+.b..w
+wwbbb
+wwwbb
+
+380 9 w
+382
+.ww..
+.b.bw
+.b..w
+wwbbb
+wwwbb
+
+380 10 b
+382
+.ww.w
+.b.bw
+.b..w
+wwbbb
+wwwbb
+
+380 10 w
+382
+.ww.w
+.b.bw
+.b.bw
+wwbbb
+wwwbb
+
+380 11 b
+382
+.wwww
+.b.bw
+.b.bw
+wwbbb
+wwwbb
+
+380 11 w
+382
+.wwww
+.bbbw
+.b.bw
+wwbbb
+wwwbb
+
+380 12 b
+382
+.wwww
+wbbbw
+.b.bw
+wwbbb
+wwwbb
+
+380 12 w
+382
+.wwww
+wbbbw
+bb.bw
+bbbbb
+bbbbb
+
+380 13 b
+382
+.wwww
+wbbbw
+bb.bw
+bbbbb
+bbbbb
+380 13 *
+382
+.wwww
+wbbbw
+bb.bw
+bbbbb
+bbbbb
+Black wins.
+
+C:\Users\omura\Documents\courses\CS541\final\gothello-grossthello>

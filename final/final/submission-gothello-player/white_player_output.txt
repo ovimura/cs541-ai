@@ -1,0 +1,28 @@
+C:\Users\omura\Documents\courses\CS541\final\gothello-grossthello>java Grossthello white localhost 0 3
+opp: 1. b1
+me:  1. ... b5
+opp: 2. b4
+me:  2. ... c1
+opp: 3. b3
+me:  3. ... e4
+opp: 4. e2
+me:  4. ... a2
+opp: 5. e1
+me:  5. ... b2
+opp: 6. d2
+me:  6. ... e3
+opp: 7. c2
+me:  7. ... a1
+opp: 8. d1
+me:  8. ... c5
+opp: 9. d4
+me:  9. ... e5
+opp: 10. d3
+me:  10. ... d5
+opp: 11. c4
+me:  11. ... a4
+opp: 12. a3
+me:  12. ... pass
+Game ends with black win
+
+C:\Users\omura\Documents\courses\CS541\final\gothello-grossthello>

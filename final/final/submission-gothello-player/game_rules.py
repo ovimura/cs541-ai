@@ -1,3 +1,7 @@
+# CS541: AI
+# Author: Ovidiu Mura
+# I implemented the Move and Board classes from
+# the Server side of the application.
 
 class Move:
     def __init__(self):
@@ -258,9 +262,3 @@ class Board:
         if (nwhite > nblack):
             return self.PLAYER_WHITE
         return self.OBSERVER
-
-# b = Board()
-# scratch = [[0]*5 for _ in range(5)]
-# print(scratch)
-# b.flood(scratch=scratch, color=0,x=1,y=1)
-# print(scratch)

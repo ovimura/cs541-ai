@@ -1,13 +1,17 @@
 #!/usr/bin/python3
+# CS541: AI
 # Student: Ovidiu Mura
+# Date: December 10, 2019
+# Minimax player implementation
 
-# minimax move black player
+
 import gthclient
-from agent import *
+from minimax import *
 import sys
 
 if len(sys.argv) != 5:
-    print("usage: python minimax.py <color> <host_name> <host_number> <depth>")
+	print("usage: python3 player.py <color> <host_name> <host_number> <depth>")
+	exit(0)
 
 color = sys.argv[1]
 host_name = sys.argv[2]
@@ -17,17 +21,17 @@ depth = int(sys.argv[4])
 client = gthclient.GthClient(color, host_name, int(host_number))
 
 if 'black' in color:
-	ma = MinimaxAgent(depth,1)
+	ma = Minimax(depth,1)
 else:
-	ma = MinimaxAgent(depth,0)
+	ma = Minimax(depth,0)
 
 s = State() # actual game
 sim = State() # simulation of actual, checking the rules
-
+i = 1
 while True:
 	if 'black' in color:
 		move = ma.choose_action(s,sim)[1]
-		print("me:", move)
+		print("{}. me:{}".format(i,move))
 		if move != 'pass':
 			try:
 				client.make_move(move)
@@ -49,7 +53,7 @@ while True:
 		try:
 			cont, move = client.get_move()
 			ma.update_rules(sim, move)
-			print("opp:", move)
+			print("{}. opp: {}".format(i, move))
 			if cont and move == "pass":
 				print("me: pass to end game")
 				client.make_move("pass")
@@ -67,7 +71,7 @@ while True:
 		try:
 			cont, move = client.get_move()
 			ma.update_rules(sim, move)
-			print("opp:", move)
+			print("{}. opp: {}".format(i,move))
 			if cont and move == "pass":
 				print("me: pass to end game")
 				client.make_move("pass")
@@ -82,7 +86,7 @@ while True:
 			pass
 		sim.game_rules.print_board()
 		move = ma.choose_action(s,sim)[1]
-		print("me:", move)
+		print("{}. me:{}".format(i,move))
 		if move != 'pass':
 			try:
 				client.make_move(move)
@@ -97,3 +101,9 @@ while True:
 			print("me: no legal moves left, passing")
 			client.make_move("pass")
 		sim.game_rules.print_board()
+	i += 1
+	print()
+if int(sim.game_rules.count_score()[0]) > int(sim.game_rules.count_score()[1]):
+	print("Black Wins.")
+else:
+	print("White Wins.")

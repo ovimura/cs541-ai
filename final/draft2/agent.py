@@ -125,7 +125,7 @@ class HelperMinimax:
             a concatenated all list of actions.
         """
         collected_moves = state.get_possible_moves()
-        all_possible_moves = collected_moves #AI._one_move(collected_moves)
+        all_possible_moves = collected_moves
         if len(all_possible_moves) == 0:
             return 0
         return all_possible_moves

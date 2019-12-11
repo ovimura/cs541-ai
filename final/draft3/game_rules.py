@@ -176,7 +176,7 @@ class Board:
             for j in range(5):
                 if self.square[i][j] == 0:
                     m = str(i)+str(j)
-            if self.move_ok(m):
+            if self.move_ok(Move().convert_to_coord(m)):
                 result.append(m)
         return result
 

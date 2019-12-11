@@ -95,6 +95,21 @@ class Board:
                     print("?",end="")
             print()
 
+    def count_score(self):
+        black = 0
+        white = 0
+        empty = 0
+        for j in [4,3,2,1,0]:
+            for i in [0,1,2,3,4]:
+                if self.square[i][j] == 0:
+                    empty += 1
+                elif self.square[i][j] == self.BLACK_CHECKER:
+                    black += 1
+                elif self.square[i][j] == self.WHITE_CHECKER:
+                    white += 1
+        return black, white, empty
+
+
     def opponent(self, player):
         if player == self.PLAYER_WHITE:
             return self.PLAYER_BLACK
